@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 import './providers/tasks_provider.dart';
 
 import './screens/home_screen/home_screen.dart';
+import './screens/tasks_screen/tasks_screen.dart';
 import './screens/page_not_found_screen/page_not_found.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -24,7 +27,11 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.indigo,
           fontFamily: 'Roboto',
         ),
-        home: HomeScreen(),
+        initialRoute: '/',
+        routes: {
+          HomeScreen.routeName: (context) => HomeScreen(),
+          TasksScreen.routeName:(context) => TasksScreen(),
+        },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (ctx) => PageNotFoundScreen(),);
         },
