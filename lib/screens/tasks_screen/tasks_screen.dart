@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/tasks_provider.dart';
+import '../loading_screen.dart';
 
 class TasksScreen extends StatefulWidget {
   static const routeName = '/tasks';
@@ -24,18 +25,17 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Tasks screen"),
-        ),
-        body: Container(
-          child: Consumer<TasksProvider>(
-            builder: (_, tasks, __) {
-              return tasks.tasks == null
-                  ? Text("Loading posts")
-                  : Text("${tasks.tasks['title']}");
-            },
-          ),
-        ));
+    TasksProvider _tasks = Provider.of<TasksProvider>(context);
+
+    return _tasks.tasks == null
+        ? LoadingScreen()
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text("Tasks screen"),
+            ),
+            body: Container(
+              child: Text("${_tasks.tasks['title']}"),
+              ),
+            );
   }
 }
