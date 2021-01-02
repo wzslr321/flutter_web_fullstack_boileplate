@@ -13,12 +13,20 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      Provider.of<TasksProvider>(context).fetchTasks();
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<TasksProvider>(context).fetchTasks().then((_) => {
+            setState(() {
+              _isLoading = false;
+            })
+          });
     }
     _isInit = false;
   }
@@ -27,15 +35,17 @@ class _TasksScreenState extends State<TasksScreen> {
   Widget build(BuildContext context) {
     TasksProvider _tasks = Provider.of<TasksProvider>(context);
 
-    return _tasks.tasks == null
+    return _isLoading == true
         ? LoadingScreen()
         : Scaffold(
             appBar: AppBar(
               title: const Text("Tasks screen"),
             ),
-            body: Container(
-              child: Text("${_tasks.tasks['title']}"),
-              ),
-            );
+            body: Container(child: Consumer<TasksProvider>(
+              builder: (_, tasks, __) {
+                return Text("${_tasks.tasks['title']}");
+              },
+            )),
+          );
   }
 }

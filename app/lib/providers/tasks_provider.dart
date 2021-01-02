@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class TasksProvider with ChangeNotifier{
-  var _tasks;
+  dynamic _tasks;
 
   get tasks {
     return _tasks;
