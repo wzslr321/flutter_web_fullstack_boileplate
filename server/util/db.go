@@ -2,13 +2,13 @@ package util
 
 import (
 	"database/sql"
+	"github.com/wzslr321/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"log"
 	"os"
-	"github.com/wzslr321/models"
 	"time"
 )
 
