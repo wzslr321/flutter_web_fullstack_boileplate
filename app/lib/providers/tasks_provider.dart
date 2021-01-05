@@ -1,12 +1,13 @@
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
-class TasksProvider with ChangeNotifier{
+// ignore: prefer_mixin
+class TasksProvider with ChangeNotifier {
   dynamic _tasks;
 
-  get tasks {
+  dynamic get tasks {
     return _tasks;
   }
 
@@ -15,10 +16,9 @@ class TasksProvider with ChangeNotifier{
     try {
       final response = await http.get(url);
       _tasks = await convert.jsonDecode(response.body);
-    } catch(error) {
-      throw (error);
+    } catch (error) {
+      rethrow;
     }
     notifyListeners();
   }
-
 }
