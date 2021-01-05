@@ -5,18 +5,11 @@ import (
 	"github.com/wzslr321/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"log"
-	"os"
-	"time"
 )
 
-
-
-var (
-	Db,_ = InitDB()
-)
+var Db *gorm.DB
 
 type Migrator interface {
 	AutoMigrate(dst ...interface{}) error
@@ -46,38 +39,21 @@ type Migrator interface {
 	RenameIndex(dst interface{}, oldName, newName string) error
 }
 
-func setupMigration(db *gorm.DB) {
-	err := db.AutoMigrate(
+func InitDB() {
+	var err error
+
+	dsn := "host=postgres user=postgres password=mypswd dbname=forumwebsite port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+
+	Db, err = gorm.Open(postgres.Open(dsn), new(gorm.Config))
+	if err != nil {
+		log.Panic(err)
+	}
+
+	 Db.AutoMigrate(
 		&models.Post{},
 		&models.Author{},
 		&models.Comment{},
 	)
-	if err != nil {
-		log.Fatalln("Error occurred while setup migration")
-	}
+
 }
 
-func InitDB() (*gorm.DB,error){
-
-	newLogger := logger.New(
-		log.New(os.Stdout,"\r\n", log.LstdFlags),
-		logger.Config{
-			SlowThreshold: time.Second,
-			LogLevel: logger.Silent,
-			Colorful: true,
-		},
-	)
-
-	db,err := gorm.Open(postgres.New(postgres.Config{
-		DSN: "user=postgres password=postgres dbname=react_golang port=5432 sslmode=disable TimeZone=Europe/Warsaw",
-	}), &gorm.Config{
-		Logger: newLogger,
-	})
-	if err != nil {
-		log.Panic("Failed connect to the database")
-	}
-
-	setupMigration(db)
-
-	return db,nil
-}
