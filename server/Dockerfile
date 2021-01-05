@@ -2,10 +2,10 @@ FROM golang
 
 WORKDIR /app
 
-COPY . ./
+RUN go get -u -v github.com/cosmtrek/air
 
-RUN go get
+COPY . .
 
 EXPOSE 8000
 
-CMD ["go", "run", "main.go"]
+CMD ["air", "-d"]
