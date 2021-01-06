@@ -47,4 +47,5 @@ app/android/app/release
 
 server/go.sum
 env/
-server/tmp/
+server/tmp/main
+.env

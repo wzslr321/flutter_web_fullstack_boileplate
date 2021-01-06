@@ -2,12 +2,15 @@ package util
 
 import (
 	"database/sql"
-	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/wzslr321/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"log"
+	"os"
+	"time"
 )
 
 var Db *gorm.DB
@@ -40,17 +43,38 @@ type Migrator interface {
 	RenameIndex(dst interface{}, oldName, newName string) error
 }
 
-func InitDB() {
-	var err error
-
-	dsn := "host=postgresql user=postgres password=mypswd dbname=forumwebsite port=5432 sslmode=disable TimeZone=Europe/Warsaw"
-	fmt.Println("cOOL")
-	Db, err = gorm.Open(postgres.Open(dsn), new(gorm.Config))
+func checkError(err error) {
 	if err != nil {
-		log.Panic(err)
+		log.Fatal(err)
 	}
+}
 
-	 Db.AutoMigrate(
+func InitDB() {
+	err := godotenv.Load(".env"); checkError(err)
+
+	var (
+		DBName = os.Getenv("POSTGRES_DB")
+		DBPswd = os.Getenv("POSTGRES_PASSWORD")
+	)
+
+	var newLogger = logger.New(
+		log.New(os.Stdout,"\r\n", log.LstdFlags),
+		logger.Config{
+			SlowThreshold: time.Second,
+			LogLevel: logger.Silent,
+			Colorful: true,
+		},
+	)
+
+	dsn := "host=postgresql user=postgres password=" + DBPswd +  " dbname=" + DBName + " port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+
+	Db, err = gorm.Open(postgres.New(postgres.Config{
+		DSN: dsn,
+	}), &gorm.Config{
+		Logger: newLogger,
+	}); checkError(err)
+
+	_ = Db.AutoMigrate(
 		&models.Post{},
 		&models.Author{},
 		&models.Comment{},

@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   postgresql:
-    image: 'postgres'
+    image: 'postgres:13.1-alpine'
     volumes: 
       - data:/var/lib/postgresql/data
     env_file: 
@@ -13,14 +13,32 @@ services:
         retries: 5
     ports: 
       - '5432:5432'
+  redis:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
   server:
-    build: ./server
+    build:
+      context: server
     ports:
       - '8000:8000'
     volumes: 
       - ./server:/app
     depends_on: 
-      - postgresql
+      - "postgresql"
+      - "redis"
+  nginx:
+    build:
+      context: nginx
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - "server"
 
 volumes: 
   data:

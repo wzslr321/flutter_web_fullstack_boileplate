@@ -22,7 +22,7 @@ func GetPostRoute(ctx *gin.Context){
 
 }
 
-func PostPostRoute(ctx *gin.Context) {
+func AddPostRoute(ctx *gin.Context) {
 	util.AddPost()
 	ctx.JSON(http.StatusOK,gin.H{
 		"status":"Cool",

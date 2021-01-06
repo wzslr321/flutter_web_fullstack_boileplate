@@ -1,6 +1,6 @@
 
 package util
-/*
+
 
 import (
 	"context"
@@ -18,7 +18,7 @@ func newPool() *redis.Pool {
 		MaxIdle:3,
 		IdleTimeout:240 * time.Second,
 		DialContext: func(context.Context) (redis.Conn, error) {
-			return redis.Dial("tcp",":6379")
+			return redis.Dial("tcp","redis:6379")
 		},
 	}
 }
@@ -38,7 +38,7 @@ func ServeHome(ctx *gin.Context){
 
 	conn := pool.Get()
 	defer conn.Close()
-	fmt.Println("xd!")
+
 	var p1,p2 struct{
 		Title string `redis:"title" json:"title"`
 		Author string `redis:"author" json:"author"`
@@ -82,4 +82,3 @@ func ServeHome(ctx *gin.Context){
 	})
 }
 
-*/
