@@ -9,13 +9,15 @@ import (
 
 func main() {
 	util.InitDB()
+	util.InitializeRedis()
 	router := gin.Default()
 
-	router.GET("/", controllers.GetIndex)
-	router.GET("/posts", controllers.GetPostRoute)
-	router.POST("/posts", controllers.PostPostRoute)
-	router.GET("/posts/all", controllers.MainPostController)
-	router.POST("/post", controllers.MainPostController)
+	router.GET("/api/", controllers.GetIndex)
+	router.GET("/api/posts", controllers.GetPostRoute)
+	router.POST("/api/add/post", controllers.AddPostRoute)
+	//router.GET("/posts/all", controllers.MainPostController)
+	//router.POST("/post", controllers.MainPostController)
+	 router.GET("/redis", util.ServeHome)
 
 	_ = router.Run(":8000")
 }
