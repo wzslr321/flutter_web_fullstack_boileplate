@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/wzslr321/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -42,8 +43,8 @@ type Migrator interface {
 func InitDB() {
 	var err error
 
-	dsn := "host=postgres user=postgres password=mypswd dbname=forumwebsite port=5432 sslmode=disable TimeZone=Europe/Warsaw"
-
+	dsn := "host=postgresql user=postgres password=mypswd dbname=forumwebsite port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+	fmt.Println("cOOL")
 	Db, err = gorm.Open(postgres.Open(dsn), new(gorm.Config))
 	if err != nil {
 		log.Panic(err)

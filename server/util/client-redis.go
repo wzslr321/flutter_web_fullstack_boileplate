@@ -1,4 +1,6 @@
+
 package util
+/*
 
 import (
 	"context"
@@ -11,34 +13,32 @@ import (
 	"time"
 )
 
-func newPool(addr string) *redis.Pool {
-	ctx := context.Background()
-
+func newPool() *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:3,
 		IdleTimeout:240 * time.Second,
 		DialContext: func(context.Context) (redis.Conn, error) {
-			return redis.DialContext(ctx,"tcp",addr)
+			return redis.Dial("tcp",":6379")
 		},
 	}
 }
 
 var (
 	pool *redis.Pool
-	redisServer = flag.String("redisServer", ":6379", "")
 )
+
+
 
 func InitializeRedis() {
 	flag.Parse()
-	pool = newPool(*redisServer)
+	pool = newPool()
 }
 
 func ServeHome(ctx *gin.Context){
 
 	conn := pool.Get()
 	defer conn.Close()
-
-
+	fmt.Println("xd!")
 	var p1,p2 struct{
 		Title string `redis:"title" json:"title"`
 		Author string `redis:"author" json:"author"`
@@ -82,3 +82,4 @@ func ServeHome(ctx *gin.Context){
 	})
 }
 
+*/

@@ -8,8 +8,6 @@ import (
 
 
 func main() {
-
-	util.InitializeRedis()
 	util.InitDB()
 	router := gin.Default()
 
@@ -18,8 +16,6 @@ func main() {
 	router.POST("/posts", controllers.PostPostRoute)
 	router.GET("/posts/all", controllers.MainPostController)
 	router.POST("/post", controllers.MainPostController)
-	router.GET("/redis", util.ServeHome)
-
 
 	_ = router.Run(":8000")
 }

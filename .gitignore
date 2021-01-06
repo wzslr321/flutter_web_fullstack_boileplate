@@ -44,3 +44,7 @@ app.*.map.json
 app/android/app/src/debug
 app/android/app/src/profile
 app/android/app/release
+
+server/go.sum
+env/
+server/tmp/
