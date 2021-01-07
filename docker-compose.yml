@@ -39,6 +39,19 @@ services:
       - "80:80"
     depends_on:
       - "server"
+      - "app"
+  app :
+    build:
+      context: app
+    image: "cirrusci/flutter:dev"
+    volumes:
+      - $PWD/app:/build
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - "server"
 
 volumes: 
   data:
