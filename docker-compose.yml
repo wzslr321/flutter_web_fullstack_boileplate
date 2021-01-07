@@ -39,6 +39,22 @@ services:
       - "80:80"
     depends_on:
       - "server"
+      - "app"
+  app :
+    build: ./app/.
+    restart: always
+    volumes:
+      - $PWD/app:/build
+      - ./app:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./env/flutter.env
+    command: >
+      sh -c "flutter pub get && flutter run -d web-server --web-port 8080 --web-hostname 0.0.0.0"
+    depends_on:
+      - "server"
+
 
 volumes: 
   data:

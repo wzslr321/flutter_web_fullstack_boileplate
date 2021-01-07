@@ -17,7 +17,7 @@ func main() {
 	router.POST("/api/add/post", controllers.AddPostRoute)
 	//router.GET("/posts/all", controllers.MainPostController)
 	//router.POST("/post", controllers.MainPostController)
-	 router.GET("/redis", util.ServeHome)
+	 router.GET("/api/redis", util.ServeHome)
 
 	_ = router.Run(":8000")
 }
