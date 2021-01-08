@@ -1,6 +1,6 @@
 FROM cirrusci/flutter:dev AS build
 
-WORKDIR /app
+WORKDIR /build
 
 RUN flutter channel beta \
     && flutter upgrade \

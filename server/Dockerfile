@@ -2,7 +2,9 @@ FROM golang:1.14-alpine
 
 WORKDIR /app
 
-RUN go get -u -v github.com/cosmtrek/air
+
+RUN apk add git gcc libc-dev \
+    &&  go get -u -v github.com/cosmtrek/air
 
 COPY . .
 

@@ -7,10 +7,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter forum"),
+        title: const Text("Flutter forum :D"),
       ),
       body: Container(
-        child: Text("Hello world!"),
+        child: Text("siemanko"),
       ),
     );
   }
