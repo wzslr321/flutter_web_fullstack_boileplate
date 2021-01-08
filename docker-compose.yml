@@ -1,9 +1,21 @@
 version: '3.9'
 services:
+  redis:
+    image: redis:alpine3.12
+    ports:
+      - "6379:6379"
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
   postgresql:
-    image: 'postgres:13.1-alpine'
+    image: postgres:13.1-alpine
+    restart: always
     volumes: 
-      - data:/var/lib/postgresql/data
+      - $PWD/data:/var/lib/postgresql/data
     env_file: 
       - ./env/postgre.env
     healthcheck:
@@ -11,24 +23,39 @@ services:
         interval: 10s
         timeout: 5s
         retries: 5
-    ports: 
-      - '5432:5432'
-  redis:
-    image: "redis"
     ports:
-      - "6379:6379"
-    volumes:
-      - $PWD/redis-data:/var/lib/redis
+      - '5432:5432'
+    depends_on:
+      redis:
+        condition: service_healthy
   server:
     build:
       context: server
+    environment:
+      GIN_MODE: release
     ports:
       - '8000:8000'
     volumes: 
       - ./server:/app
-    depends_on: 
-      - "postgresql"
-      - "redis"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+  app:
+    build: ./app/.
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - $PWD/app:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./env/flutter.env
+    command: >
+      sh -c "flutter pub get
+      && flutter run -d web-server --web-port 8080 --web-hostname 0.0.0.0"
+    depends_on:
+      - server
   nginx:
     build:
       context: nginx
@@ -38,23 +65,11 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - "server"
-      - "app"
-  app :
-    build: ./app/.
-    restart: always
-    volumes:
-      - $PWD/app:/build
-      - ./app:/app
-    ports:
-      - "8080:8080"
-    env_file:
-      - ./env/flutter.env
-    command: >
-      sh -c "flutter pub get && flutter run -d web-server --web-port 8080 --web-hostname 0.0.0.0"
-    depends_on:
-      - "server"
+      - server
+      - app
+
 
 
 volumes: 
   data:
+  redis-data:

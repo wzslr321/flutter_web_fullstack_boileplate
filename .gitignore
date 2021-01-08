@@ -51,3 +51,4 @@ server/logs/
 server/tmp/
 .env
 redis-data/
+data/
