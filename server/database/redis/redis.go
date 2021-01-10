@@ -1,5 +1,5 @@
 
-package util
+package redis
 
 
 import (
@@ -26,8 +26,6 @@ func newPool() *redis.Pool {
 var (
 	pool *redis.Pool
 )
-
-
 
 func InitializeRedis() {
 	flag.Parse()

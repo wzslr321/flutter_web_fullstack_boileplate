@@ -1,23 +1,59 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/wzslr321/controllers"
-	"github.com/wzslr321/util"
+	"context"
+	"github.com/wzslr321/database/postgres"
+	"github.com/wzslr321/database/redis"
+	"github.com/wzslr321/routers"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
-
 func main() {
-	util.InitDB()
-	util.InitializeRedis()
-	router := gin.Default()
 
-	router.GET("/api/", controllers.GetIndex)
-	router.GET("/api/posts", controllers.GetPostRoute)
-	router.POST("/api/add/post", controllers.AddPostRoute)
-	//router.GET("/posts/all", controllers.MainPostController)
-	//router.POST("/post", controllers.MainPostController)
-	 router.GET("/api/redis", util.ServeHome)
+	postgres.InitDB()
+	redis.InitializeRedis()
 
-	_ = router.Run(":8000")
+	router := routers.InitRouter()
+
+	s := &http.Server{
+		Addr: ":8000",
+		Handler: router,
+		ReadTimeout: 10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	go func() {
+		if err := s.ListenAndServe() ;err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Listen: %s\n", err)
+		}
+	}()
+
+	quit := make(chan os.Signal)
+
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	log.Println("Shutting down the server...")
+
+	ctx,cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := s.Shutdown(ctx); err != nil {
+		log.Fatal("Server shutdown", err)
+	}
+
+	select {
+		case <- ctx.Done():
+			log.Println("Timeout of 5 seconds")
+	}
+	log.Println("Server exiting")
+
+
 }
+
+

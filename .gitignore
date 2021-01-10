@@ -45,10 +45,7 @@ app/android/app/src/debug
 app/android/app/src/profile
 app/android/app/release
 
-server/go.sum
-env/
 server/logs/
 server/tmp/
-.env
 redis-data/
 data/

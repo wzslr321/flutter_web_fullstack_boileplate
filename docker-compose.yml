@@ -16,6 +16,7 @@ services:
     restart: always
     volumes: 
       - $PWD/data:/var/lib/postgresql/data
+    # You should add all .env files to .gitignore
     env_file: 
       - ./env/postgre.env
     healthcheck:
@@ -65,10 +66,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - server
       - app
-
-
+      - server
 
 volumes: 
   data:
