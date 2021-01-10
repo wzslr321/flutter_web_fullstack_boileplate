@@ -10,9 +10,8 @@ func GetIndex(ctx *gin.Context) {
 	ctx.String(http.StatusOK,"Welcome on index!" )
 }
 
-
 func FetchPosts(ctx *gin.Context){
-	posts := funcs.GetPosts()
+	posts := postgrefuncs.FetchPosts()
 
 	ctx.JSON(http.StatusOK,gin.H{
 		"title":posts.Title,
@@ -21,8 +20,17 @@ func FetchPosts(ctx *gin.Context){
 
 }
 
+func FetchLastPost(ctx * gin.Context) {
+	post := postgrefuncs.FetchLastPost()
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"title":post.Title,
+		"description":post.Description,
+	})
+}
+
 func AddPost(ctx *gin.Context) {
-	funcs.AddPost()
+	postgrefuncs.AddPost()
 	ctx.JSON(http.StatusOK,gin.H{
 		"status":"Cool",
 	})

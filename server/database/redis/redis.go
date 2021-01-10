@@ -1,82 +1,32 @@
-
-package redis
-
+package redisdb
 
 import (
-	"context"
-	"flag"
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
+	"github.com/wzslr321/settings"
 	"log"
-	"net/http"
-	"time"
 )
 
-func newPool() *redis.Pool {
-	return &redis.Pool{
-		MaxIdle:3,
-		IdleTimeout:240 * time.Second,
-		DialContext: func(context.Context) (redis.Conn, error) {
-			return redis.Dial("tcp","redis:6379")
+func checkError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+var RedisPool *redis.Pool
+
+func InitializeRedis() error {
+
+	RedisPool = &redis.Pool{
+		MaxIdle: settings.RedisSettings.MaxIdle,
+		MaxActive: settings.RedisSettings.MaxActive,
+		IdleTimeout: settings.RedisSettings.IdleTimeout,
+		Dial: func() (redis.Conn, error) {
+			conn, err := redis.Dial("tcp", settings.RedisSettings.Host); checkError(err)
+
+			return conn, nil
 		},
 	}
-}
 
-var (
-	pool *redis.Pool
-)
-
-func InitializeRedis() {
-	flag.Parse()
-	pool = newPool()
-}
-
-func ServeHome(ctx *gin.Context){
-
-	conn := pool.Get()
-	defer conn.Close()
-
-	var p1,p2 struct{
-		Title string `redis:"title" json:"title"`
-		Author string `redis:"author" json:"author"`
-		Body string `redis:"body" json:"body"`
-	}
-
-	p1.Title = "Example"
-	p1.Author = "Gary"
-	p1.Body = "Hello"
-
-	if _, err := conn.Do("HMSET", redis.Args{}.Add("id1").AddFlat(&p1)...); err != nil {
-		log.Fatalf("Error occured with redis HMSEET, %v", err)
-		return
-	}
-
-	m := map[string]string{
-		"title":"Example2",
-		"author":"Steve",
-		"body":"Map",
-	}
-
-	if _, err := conn.Do("HMSET", redis.Args{}.Add("id2").AddFlat(m)...); err != nil {
-		log.Fatalf("Error occured with redis HMSEET, %v", err)
-	}
-
-	for _,id := range[]string{"id1","id2"}{
-		v,err := redis.Values(conn.Do("HGETALL", id))
-		if err != nil {
-			log.Fatalf("Error occured with HGETALL %v", err)
-			return
-		}
-		if err := redis.ScanStruct(v,&p2); err != nil {
-			log.Fatalf("Error occured while scanning struct p")
-			return
-		}
-		fmt.Printf("%v\n",p2)
-	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"message":p2,
-		"message2":p1,
-	})
+	return nil
 }
 

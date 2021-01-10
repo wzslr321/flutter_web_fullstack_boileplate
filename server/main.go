@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/wzslr321/database/postgres"
-	"github.com/wzslr321/database/redis"
+	redisdb "github.com/wzslr321/database/redis"
 	"github.com/wzslr321/routers"
+	"github.com/wzslr321/settings"
 	"log"
 	"net/http"
 	"os"
@@ -13,26 +15,37 @@ import (
 	"time"
 )
 
+func init() {
+	settings.InitSettings()
+	postgres.InitDB()
+	_ = redisdb.InitializeRedis()
+}
+
 func main() {
 
-	postgres.InitDB()
-	redis.InitializeRedis()
-
-	router := routers.InitRouter()
+	router 	       := routers.InitRouter()
+	readTimeout    := settings.ServerSettings.ReadTimeout
+	writeTimeout   := settings.ServerSettings.WriteTimeout
+	port		   := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
+	mxHdrBytes     := settings.ServerSettings.MaxHeaderBytes
 
 	s := &http.Server{
-		Addr: ":8000",
-		Handler: router,
-		ReadTimeout: 10 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		Addr: 		    port,
+		Handler: 	    router,
+		ReadTimeout:    readTimeout,
+		WriteTimeout:   writeTimeout,
+		MaxHeaderBytes: mxHdrBytes,
 	}
+
+	_ = s.ListenAndServe()
+
+	log.Printf("Server is running on port:  %s", port)
 
 	go func() {
 		if err := s.ListenAndServe() ;err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Listen: %s\n", err)
 		}
-	}()
+	} ()
 
 	quit := make(chan os.Signal)
 
