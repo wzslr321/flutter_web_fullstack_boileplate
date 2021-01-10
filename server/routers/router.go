@@ -3,7 +3,6 @@ package routers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/wzslr321/database/redis"
 	routers "github.com/wzslr321/routers/api"
 	"time"
 )
@@ -32,14 +31,15 @@ func InitRouter() *gin.Engine {
 
 	posts := r.Group("/api/posts")
 	{
-		posts.GET("/fetch", routers.FetchPosts)
+		posts.GET("/fetch/all", routers.FetchPosts)
+		posts.GET("/fetch/last", routers.FetchLastPost)
 		posts.POST("/add", routers.AddPost)
 	}
 
 	test := r.Group("/api/test")
 	{
 		test.GET("/index", routers.GetIndex)
-		test.GET("/redis", redis.ServeHome)
+		test.GET("/redis", routers.FetchAnnouncements)
 	}
 
 	return r

@@ -1,12 +1,20 @@
-package funcs
+package postgrefuncs
 
 import (
 	"github.com/wzslr321/database/postgres"
 	"github.com/wzslr321/models"
 )
 
-func GetPosts() models.Post {
-	var post models.Post
+var (
+	post models.Post
+)
+
+func FetchPosts() models.Post {
+	postgres.Db.First(&post)
+	return post
+}
+
+func FetchLastPost() models.Post {
 	postgres.Db.First(&post)
 	return post
 }
