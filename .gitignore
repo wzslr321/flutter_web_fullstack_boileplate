@@ -45,6 +45,7 @@ app/android/app/src/debug
 app/android/app/src/profile
 app/android/app/release
 
+
 server/logs/
 server/tmp/
 redis-data/
