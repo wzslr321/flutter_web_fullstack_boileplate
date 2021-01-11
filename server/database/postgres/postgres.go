@@ -49,7 +49,7 @@ func checkError(err error) {
 	}
 }
 
-func InitDB() {
+func InitPostgre() {
 	err := godotenv.Load(".env"); checkError(err)
 
 	var (

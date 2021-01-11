@@ -17,8 +17,8 @@ import (
 
 func init() {
 	settings.InitSettings()
-	postgres.InitDB()
-	_ = redisdb.InitializeRedis()
+	postgres.InitPostgre()
+	redisdb.InitRedis()
 }
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 	router 	       := routers.InitRouter()
 	readTimeout    := settings.ServerSettings.ReadTimeout
 	writeTimeout   := settings.ServerSettings.WriteTimeout
-	port		   := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
+	port		   		 := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
 	mxHdrBytes     := settings.ServerSettings.MaxHeaderBytes
 
 	s := &http.Server{
