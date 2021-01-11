@@ -1,6 +1,7 @@
 package redisfuncs
 
 import (
+	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"github.com/wzslr321/database/redis"
 	"log"
@@ -16,21 +17,30 @@ func Get(key string) ([]byte, error) {
 	conn := redisdb.Pool.Get()
 	defer conn.Close()
 
-	var err error
 	var data []byte
-	data,err = redis.Bytes(conn.Do("GET", key)); checkError(err)
+	data,err := redis.Bytes(conn.Do("GET", key)); checkError(err)
+
+	fmt.Println(data)
 
 	return data, err
 }
+type P struct {
+	X, Y, Z int
+	Name    string
+}
 
-func Set(obj interface{}) error {
+type Q struct {
+	X, Y *int32
+	Name string
+}
+
+func Set(key string, value []byte) error {
 	conn := redisdb.Pool.Get()
 	defer conn.Close()
 
 	var err error
 
-	_, err = conn.Do("HMSET",redis.Args{}.Add("id1").AddFlat(obj)...)
-	checkError(err)
+	_, err = conn.Do("SET", key, value); checkErr(err)
 
 	return err
 }

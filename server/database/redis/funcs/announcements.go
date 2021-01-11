@@ -1,32 +1,59 @@
 package redisfuncs
 
+import (
+	"bytes"
+	"encoding/gob"
+	"fmt"
+	"log"
+)
+
 type Announcement struct {
 	Title string 		`redis:"title" json:"title"`
 	Description string  `redis:"author" json:"description"`
 	Author string 		`redis:"author" json:"author"`
-	Date string 		`redis:"date" json:"date"`
 }
 
-func CreateAnnouncement() Announcement {
-	/*
-	var date pgtype.Date
-	var time time.Time = time.Now()
-
-	err := date.AssignTo(time)
+func checkErr(err error) {
 	if err != nil {
-		fmt.Printf("Error occured with announcement date: %v", err)
+		log.Fatalf("Error occured with redis announcements functions: %v",err)
 	}
-	 */
+}
+
+var (
+	network bytes.Buffer
+	enc = gob.NewEncoder(&network)
+	dec = gob.NewDecoder(&network)
+)
+
+func CreateAnnouncement() error {
+	var err error
 
 	var M Announcement
 
-	M.Title = "Title test"
-	M.Description = "Desc test"
-	M.Author = "author test"
-	M.Date = "date test"
+	M.Title = "cool"
+	M.Author = "Gary"
+	M.Description = "Hello"
 
-	_ = Set(M)
+	err = enc.Encode(M)
+	err = Set("cool",network.Bytes()); checkErr(err)
 
-	return M
+	return err
+}
 
+
+func GetAnnouncements() Announcement {
+	var ann Announcement
+
+	data,err := Get("cool")
+
+	fmt.Println(data)
+	fmt.Println("Data up")
+	err = dec.Decode(&data)
+	if err != nil {
+		log.Fatalf("cdfsdfp, %v", err)
+	}
+
+	fmt.Println(data)
+
+	return ann
 }
