@@ -12,21 +12,21 @@ func checkError(err error) {
 	}
 }
 
-var RedisPool *redis.Pool
+var Pool *redis.Pool
 
-func InitializeRedis() error {
+func InitRedis() {
 
-	RedisPool = &redis.Pool{
+	Pool = &redis.Pool{
 		MaxIdle: settings.RedisSettings.MaxIdle,
 		MaxActive: settings.RedisSettings.MaxActive,
 		IdleTimeout: settings.RedisSettings.IdleTimeout,
 		Dial: func() (redis.Conn, error) {
 			conn, err := redis.Dial("tcp", settings.RedisSettings.Host); checkError(err)
 
-			return conn, nil
+			return conn, err
 		},
-	}
 
-	return nil
+		// Health check is in docker-compose file instead of here
+	}
 }
 
