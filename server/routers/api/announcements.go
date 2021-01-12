@@ -14,9 +14,7 @@ func checkErr(err error) {
 }
 
 func PostAnnouncement(ctx *gin.Context)  {
-	var err error
-
-	err = redisfuncs.CreateAnnouncement(); checkErr(err)
+	err := redisfuncs.CreateAnnouncement(); checkErr(err)
 
 	ctx.JSON(http.StatusOK,gin.H{
 		"status":"posted",
@@ -24,7 +22,6 @@ func PostAnnouncement(ctx *gin.Context)  {
 }
 
 func FetchAnnouncements(ctx *gin.Context) {
-
 	ann := redisfuncs.GetAnnouncements()
 
 	ctx.JSON(http.StatusOK, gin.H{

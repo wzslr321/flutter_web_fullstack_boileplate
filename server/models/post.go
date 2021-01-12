@@ -5,7 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type Post struct {
 	gorm.Model
 	ID          int       `gorm:"primaryKey"`

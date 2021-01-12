@@ -6,7 +6,7 @@ import (
 )
 
 type Announcement struct {
-	Title string 		`redis:"title" json:"title"`
+	Title string 		`redis:"title"  json:"title"`
 	Description string  `redis:"author" json:"description"`
 	Author string 		`redis:"author" json:"author"`
 }
@@ -17,10 +17,7 @@ func checkErr(err error) {
 	}
 }
 
-
-
 func CreateAnnouncement() error {
-
 	var M Announcement
 
 	M.Title = "cool"
@@ -33,13 +30,10 @@ func CreateAnnouncement() error {
 	return err
 }
 
-
 func GetAnnouncements() Announcement {
-
-	data,err := Get("test"); checkErr(err)
-
 	var test Announcement
 
+	data,err := Get("test"); checkErr(err)
 	err = json.Unmarshal(data,&test)
 
 	return test

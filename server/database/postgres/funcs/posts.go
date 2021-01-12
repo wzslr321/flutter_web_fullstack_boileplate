@@ -10,16 +10,16 @@ var (
 )
 
 func FetchPosts() models.Post {
-	postgres.Db.First(&post)
+	postgres.DB.First(&post)
 	return post
 }
 
 func FetchLastPost() models.Post {
-	postgres.Db.First(&post)
+	postgres.DB.First(&post)
 	return post
 }
 
 func AddPost(){
 	firstPost := models.Post{Title: "Hello", Description: "I am first post"}
-	 postgres.Db.Create(&firstPost)
+	postgres.DB.Create(&firstPost)
 }

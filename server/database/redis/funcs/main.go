@@ -16,21 +16,16 @@ func Get(key string) ([]byte, error) {
 	conn := redisdb.Pool.Get()
 	defer conn.Close()
 
-	var err error
-	var data []byte
-	data,err = redis.Bytes(conn.Do("GET", key)); checkError(err)
+	data,err := redis.Bytes(conn.Do("GET", key)); checkError(err)
 
 	return data, err
 }
-
 
 func Set(key string, value []byte) error {
 	conn := redisdb.Pool.Get()
 	defer conn.Close()
 
-	var err error
-
-	_, err = conn.Do("SET", key, value); checkErr(err)
+	_, err := conn.Do("SET", key, value); checkErr(err)
 
 	return err
 }

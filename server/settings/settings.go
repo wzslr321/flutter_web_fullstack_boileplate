@@ -22,6 +22,10 @@ type Postgres struct {
 	User string
 	Password string
 	Host string
+	DBName string
+	Addr string
+	SSLMode string
+	TimeZone string
 }
 
 var  PostgresSettings = &Postgres{}
