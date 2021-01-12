@@ -23,10 +23,12 @@ func init() {
 
 func main() {
 
+	addr := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
+
+	port		   := addr
 	router 	       := routers.InitRouter()
 	readTimeout    := settings.ServerSettings.ReadTimeout
 	writeTimeout   := settings.ServerSettings.WriteTimeout
-	port		   		 := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
 	mxHdrBytes     := settings.ServerSettings.MaxHeaderBytes
 
 	s := &http.Server{
@@ -37,12 +39,14 @@ func main() {
 		MaxHeaderBytes: mxHdrBytes,
 	}
 
-	_ = s.ListenAndServe()
+	var err error
+
+	err = s.ListenAndServe()
 
 	log.Printf("Server is running on port:  %s", port)
 
 	go func() {
-		if err := s.ListenAndServe() ;err != nil && err != http.ErrServerClosed {
+		if err = s.ListenAndServe() ;err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Listen: %s\n", err)
 		}
 	} ()
@@ -56,7 +60,7 @@ func main() {
 	ctx,cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	if err := s.Shutdown(ctx); err != nil {
+	if err = s.Shutdown(ctx); err != nil {
 		log.Fatal("Server shutdown", err)
 	}
 

@@ -38,8 +38,8 @@ func InitRouter() *gin.Engine {
 
 	test := r.Group("/api/test")
 	{
-		test.GET("/index", routers.GetIndex)
 		test.POST("/redis", routers.PostAnnouncement)
+		test.GET("/redis", routers.FetchAnnouncements)
 	}
 
 	return r
