@@ -1,9 +1,7 @@
 package redisfuncs
 
 import (
-	"bytes"
-	"encoding/gob"
-	"fmt"
+	"encoding/json"
 	"log"
 )
 
@@ -19,14 +17,9 @@ func checkErr(err error) {
 	}
 }
 
-var (
-	network bytes.Buffer
-	enc = gob.NewEncoder(&network)
-	dec = gob.NewDecoder(&network)
-)
+
 
 func CreateAnnouncement() error {
-	var err error
 
 	var M Announcement
 
@@ -34,26 +27,20 @@ func CreateAnnouncement() error {
 	M.Author = "Gary"
 	M.Description = "Hello"
 
-	err = enc.Encode(M)
-	err = Set("cool",network.Bytes()); checkErr(err)
+	data,err := json.Marshal(M); checkErr(err)
+	err = Set("test", data); checkErr(err)
 
 	return err
 }
 
 
 func GetAnnouncements() Announcement {
-	var ann Announcement
 
-	data,err := Get("cool")
+	data,err := Get("test"); checkErr(err)
 
-	fmt.Println(data)
-	fmt.Println("Data up")
-	err = dec.Decode(&data)
-	if err != nil {
-		log.Fatalf("cdfsdfp, %v", err)
-	}
+	var test Announcement
 
-	fmt.Println(data)
+	err = json.Unmarshal(data,&test)
 
-	return ann
+	return test
 }
