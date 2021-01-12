@@ -2,7 +2,6 @@ package redisfuncs
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 )
 
@@ -26,7 +25,7 @@ func CreateAnnouncement() error {
 	M.Description = "Hello"
 
 	data,err := json.Marshal(M); checkErr(err)
-	fmt.Println(data)
+
 	err = Set("test", data); checkErr(err)
 
 	return err

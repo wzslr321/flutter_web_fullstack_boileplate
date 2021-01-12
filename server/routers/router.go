@@ -36,7 +36,7 @@ func InitRouter() *gin.Engine {
 		posts.POST("/add", routers.AddPost)
 	}
 
-	announcements := r.Group("/api/redis")
+	announcements := r.Group("/api/")
 	{
 		announcements.POST("/announcement/add", routers.PostAnnouncement)
 		announcements.GET("/announcement/fetch", routers.FetchAnnouncements)

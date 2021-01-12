@@ -26,7 +26,6 @@ func Get(key string) ([]byte, error) {
 		return nil,err
 	}
 
-
 	return data, err
 }
 
