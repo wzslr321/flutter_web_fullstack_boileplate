@@ -6,12 +6,6 @@ import (
 	"log"
 )
 
-func checkError(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 var Pool *redis.Pool
 
 func InitRedis() {
@@ -21,7 +15,10 @@ func InitRedis() {
 		MaxActive: settings.RedisSettings.MaxActive,
 		IdleTimeout: settings.RedisSettings.IdleTimeout,
 		Dial: func() (redis.Conn, error) {
-			conn, err := redis.Dial("tcp", settings.RedisSettings.Host); checkError(err)
+			conn, err := redis.Dial("tcp", settings.RedisSettings.Host)
+			if err != nil {
+				log.Fatalf("Error occurred while connecting to the redis database, %v", err)
+			}
 
 			return conn, err
 		},

@@ -25,6 +25,7 @@ func CreateAnnouncement() error {
 	M.Description = "Hello"
 
 	data,err := json.Marshal(M); checkErr(err)
+
 	err = Set("test", data); checkErr(err)
 
 	return err
@@ -33,7 +34,10 @@ func CreateAnnouncement() error {
 func GetAnnouncements() Announcement {
 	var test Announcement
 
-	data,err := Get("test"); checkErr(err)
+	data,err := Get("test")
+	if err != nil {
+		test.Title="no-match"
+	}
 	err = json.Unmarshal(data,&test)
 
 	return test

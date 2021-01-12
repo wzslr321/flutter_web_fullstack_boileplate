@@ -16,7 +16,15 @@ func Get(key string) ([]byte, error) {
 	conn := redisdb.Pool.Get()
 	defer conn.Close()
 
-	data,err := redis.Bytes(conn.Do("GET", key)); checkError(err)
+	exists,err := Exists(key)
+
+	var data []byte
+
+	if exists{
+		data,err = redis.Bytes(conn.Do("GET", key)); checkError(err)
+	} else {
+		return nil,err
+	}
 
 	return data, err
 }
@@ -28,4 +36,16 @@ func Set(key string, value []byte) error {
 	_, err := conn.Do("SET", key, value); checkErr(err)
 
 	return err
+}
+func Exists(key string) (bool, error) {
+
+	conn := redisdb.Pool.Get()
+	defer conn.Close()
+
+	var err error
+	var isOK bool
+
+	isOK, err = redis.Bool(conn.Do("EXISTS", key)); checkError(err)
+
+	return isOK, err
 }

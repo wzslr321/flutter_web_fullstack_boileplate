@@ -7,14 +7,11 @@ import (
 	"net/http"
 )
 
-func checkErr(err error) {
-	if err != nil {
-		log.Fatalf("Error occured with announcements  api functions: %v",err)
-	}
-}
-
 func PostAnnouncement(ctx *gin.Context)  {
-	err := redisfuncs.CreateAnnouncement(); checkErr(err)
+	err := redisfuncs.CreateAnnouncement()
+	if err != nil {
+		log.Printf("Error while posting an announcement: %v\n", err)
+	}
 
 	ctx.JSON(http.StatusOK,gin.H{
 		"status":"posted",
@@ -24,9 +21,15 @@ func PostAnnouncement(ctx *gin.Context)  {
 func FetchAnnouncements(ctx *gin.Context) {
 	ann := redisfuncs.GetAnnouncements()
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"title":ann.Title,
-		"description": ann.Description,
-		"author": ann.Author,
-	})
+	if ann.Title != "" {
+		ctx.JSON(http.StatusOK, gin.H{
+			"title":ann.Title,
+			"description": ann.Description,
+			"author": ann.Author,
+		})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status":"There is no announcement with this id.",
+		})
+	}
 }
