@@ -9,8 +9,6 @@ import (
 
 func InitRouter() *gin.Engine {
 
-	gin.ForceConsoleColor()
-
 	r := gin.New()
 
 	r.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {

@@ -2,13 +2,19 @@ package redisfuncs
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
 type Announcement struct {
-	Title string 		`redis:"title"  json:"title"`
-	Description string  `redis:"author" json:"description"`
-	Author string 		`redis:"author" json:"author"`
+	Title string 		`redis:"title" form:"title" json:"title" binding:"required"`
+	Description string  `redis:"description" form:"description" json:"description" binding:"required"`
+	Author string 		`redis:"author" form:"author" json:"author" binding:"required"`
+}
+
+type Author struct {
+	Name string		  `redis:"author_name" form:"author_name" json:"author_name" binding:"required"`
+	Surname string	  `redis:"author_surname" form:"author_surname" json:"author_surname" binding:"required"`
 }
 
 func checkErr(err error) {
@@ -17,16 +23,23 @@ func checkErr(err error) {
 	}
 }
 
-func CreateAnnouncement() error {
-	var M Announcement
+func CreateAnnouncement(title,description,author string) error {
 
-	M.Title = "cool"
-	M.Author = "Gary"
-	M.Description = "Hello"
+	a := Announcement{
+		Title: title,
+		Description: description,
+		Author: author,
+	}
 
-	data,err := json.Marshal(M); checkErr(err)
+	data,err := json.Marshal(a); checkErr(err)
 
-	err = Set("test", data); checkErr(err)
+	var yes bool
+	yes,err = Exists(title)
+	if yes {
+		err = fmt.Errorf("post with this title already exists")
+	} else {
+		err = Set(title, data); checkErr(err)
+	}
 
 	return err
 }
@@ -34,7 +47,9 @@ func CreateAnnouncement() error {
 func GetAnnouncements() Announcement {
 	var test Announcement
 
-	data,err := Get("test")
+	fmt.Print("!!")
+
+	data,err := Get("es")
 	if err != nil {
 		test.Title="no-match"
 	}
