@@ -7,38 +7,40 @@ import (
 )
 
 type Announcement struct {
-	Title string 		`redis:"title" form:"title" json:"title" binding:"required"`
-	Description string  `redis:"description" form:"description" json:"description" binding:"required"`
-	Author string 		`redis:"author" form:"author" json:"author" binding:"required"`
+	Title       string `redis:"title" form:"title" json:"title" binding:"required"`
+	Description string `redis:"description" form:"description" json:"description" binding:"required"`
+	Author      string `redis:"author" form:"author" json:"author" binding:"required"`
 }
 
 type Author struct {
-	Name string		  `redis:"author_name" form:"author_name" json:"author_name" binding:"required"`
-	Surname string	  `redis:"author_surname" form:"author_surname" json:"author_surname" binding:"required"`
+	Name    string `redis:"author_name" form:"author_name" json:"author_name" binding:"required"`
+	Surname string `redis:"author_surname" form:"author_surname" json:"author_surname" binding:"required"`
 }
 
 func checkErr(err error) {
 	if err != nil {
-		log.Fatalf("Error occured with redis announcements functions: %v",err)
+		log.Fatalf("Error occured with redis announcements functions: %v", err)
 	}
 }
 
-func CreateAnnouncement(title,description,author string) error {
+func CreateAnnouncement(title, description, author string) error {
 
 	a := Announcement{
-		Title: title,
+		Title:       title,
 		Description: description,
-		Author: author,
+		Author:      author,
 	}
 
-	data,err := json.Marshal(a); checkErr(err)
+	data, err := json.Marshal(a)
+	checkErr(err)
 
 	var yes bool
-	yes,err = Exists(title)
+	yes, err = Exists(title)
 	if yes {
 		err = fmt.Errorf("post with this title already exists")
 	} else {
-		err = Set(title, data); checkErr(err)
+		err = Set(title, data)
+		checkErr(err)
 	}
 
 	return err
@@ -49,11 +51,11 @@ func GetAnnouncements() Announcement {
 
 	fmt.Print("!!")
 
-	data,err := Get("es")
+	data, err := Get("es")
 	if err != nil {
-		test.Title="no-match"
+		test.Title = "no-match"
 	}
-	err = json.Unmarshal(data,&test)
+	err = json.Unmarshal(data, &test)
 
 	return test
 }

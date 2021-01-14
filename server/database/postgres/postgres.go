@@ -24,7 +24,7 @@ type Migrator interface {
 	CreateTable(dst ...interface{}) error
 	DropTable(dst ...interface{}) error
 	HasTable(dst interface{}) bool
-	RenameTable(oldName,newName interface{}) error
+	RenameTable(oldName, newName interface{}) error
 
 	AddColumn(dst interface{}, field string) error
 	DropColumn(dst interface{}, field string) error
@@ -54,11 +54,11 @@ func InitPostgre() {
 	var err error
 
 	var newLogger = logger.New(
-		log.New(os.Stdout,"\r\n", log.LstdFlags),
+		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		logger.Config{
 			SlowThreshold: time.Second,
-			LogLevel: logger.Silent,
-			Colorful: true,
+			LogLevel:      logger.Silent,
+			Colorful:      true,
 		},
 	)
 
@@ -66,14 +66,15 @@ func InitPostgre() {
 
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s",
-				s.Host,s.User,s.Password, s.DBName, s.Addr, s.SSLMode, s.TimeZone,
-		)
+		s.Host, s.User, s.Password, s.DBName, s.Addr, s.SSLMode, s.TimeZone,
+	)
 
 	DB, err = gorm.Open(postgres.New(postgres.Config{
 		DSN: dsn,
 	}), &gorm.Config{
 		Logger: newLogger,
-	}); checkError(err)
+	})
+	checkError(err)
 
 	_ = DB.AutoMigrate(
 		&models.Post{},
@@ -82,4 +83,3 @@ func InitPostgre() {
 	)
 
 }
-

@@ -6,15 +6,15 @@ import (
 	"net/http"
 )
 
-func PostAnnouncement(ctx *gin.Context)  {
-	err := redisfuncs.CreateAnnouncement("es","es2","es3")
+func PostAnnouncement(ctx *gin.Context) {
+	err := redisfuncs.CreateAnnouncement("es", "es2", "es3")
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"status":"Announcement with this title already exists!",
+			"status": "Announcement with this title already exists!",
 		})
 	} else {
-		ctx.JSON(http.StatusOK,gin.H{
-			"status":"posted",
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": "posted",
 		})
 	}
 }
@@ -24,9 +24,9 @@ func FetchAnnouncements(ctx *gin.Context) {
 
 	if ann.Title != "" {
 		ctx.JSON(http.StatusOK, gin.H{
-			"title":ann.Title,
+			"title":       ann.Title,
 			"description": ann.Description,
-			"author": ann.Author,
+			"author":      ann.Author,
 		})
 	} else {
 		noMatch(ctx)
@@ -35,6 +35,6 @@ func FetchAnnouncements(ctx *gin.Context) {
 
 func noMatch(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
-		"status":"There is no announcement with this id.",
+		"status": "There is no announcement with this id.",
 	})
 }

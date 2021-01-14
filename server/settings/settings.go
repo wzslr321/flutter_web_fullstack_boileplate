@@ -9,38 +9,38 @@ import (
 )
 
 type Server struct {
-	RunMode string
-	Addr string
-	ReadTimeout time.Duration
-	WriteTimeout time.Duration
+	RunMode        string
+	Addr           string
+	ReadTimeout    time.Duration
+	WriteTimeout   time.Duration
 	MaxHeaderBytes int
 }
 
 var ServerSettings = &Server{}
 
 type Postgres struct {
-	User string
+	User     string
 	Password string
-	Host string
-	DBName string
-	Addr string
-	SSLMode string
+	Host     string
+	DBName   string
+	Addr     string
+	SSLMode  string
 	TimeZone string
 }
 
-var  PostgresSettings = &Postgres{}
+var PostgresSettings = &Postgres{}
 
 type Redis struct {
-	Host string
-	Password string
-	MaxIdle int
-	MaxActive int
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
 	IdleTimeout time.Duration
 }
 
 var RedisSettings = &Redis{}
 
-var cfg * ini.File
+var cfg *ini.File
 
 func InitSettings() {
 	var err error

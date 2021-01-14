@@ -11,8 +11,8 @@ var Pool *redis.Pool
 func InitRedis() {
 
 	Pool = &redis.Pool{
-		MaxIdle: settings.RedisSettings.MaxIdle,
-		MaxActive: settings.RedisSettings.MaxActive,
+		MaxIdle:     settings.RedisSettings.MaxIdle,
+		MaxActive:   settings.RedisSettings.MaxActive,
 		IdleTimeout: settings.RedisSettings.IdleTimeout,
 		Dial: func() (redis.Conn, error) {
 			conn, err := redis.Dial("tcp", settings.RedisSettings.Host)
@@ -26,4 +26,3 @@ func InitRedis() {
 		// Health check is in docker-compose file instead of here
 	}
 }
-

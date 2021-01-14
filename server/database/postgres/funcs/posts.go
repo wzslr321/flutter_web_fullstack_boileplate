@@ -19,7 +19,7 @@ func FetchLastPost() models.Post {
 	return post
 }
 
-func AddPost(){
+func AddPost() {
 	firstPost := models.Post{Title: "Hello", Description: "I am first post"}
 	postgres.DB.Create(&firstPost)
 }
