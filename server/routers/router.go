@@ -34,10 +34,10 @@ func InitRouter() *gin.Engine {
 		posts.POST("/add", routers.AddPost)
 	}
 
-	announcements := r.Group("/api/")
+	announcements := r.Group("/api/announcement")
 	{
-		announcements.POST("/announcement/add", routers.PostAnnouncement)
-		announcements.GET("/announcement/fetch", routers.FetchAnnouncements)
+		announcements.POST("/add/:key", routers.PostAnnouncement)
+		announcements.GET("/fetch/:key", routers.FetchAnnouncement)
 	}
 
 	return r

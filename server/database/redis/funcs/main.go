@@ -1,6 +1,7 @@
 package redisfuncs
 
 import (
+	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"github.com/wzslr321/database/redis"
 	"log"
@@ -24,7 +25,7 @@ func Get(key string) ([]byte, error) {
 		data, err = redis.Bytes(conn.Do("GET", key))
 		checkError(err)
 	} else {
-		return nil, err
+		err = fmt.Errorf("key does not exist")
 	}
 
 	return data, err

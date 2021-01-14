@@ -23,10 +23,10 @@ func checkErr(err error) {
 	}
 }
 
-func CreateAnnouncement(title, description, author string) error {
+func CreateAnnouncement(key, description, author string) error {
 
 	a := Announcement{
-		Title:       title,
+		Title:       key,
 		Description: description,
 		Author:      author,
 	}
@@ -35,34 +35,26 @@ func CreateAnnouncement(title, description, author string) error {
 	checkErr(err)
 
 	var yes bool
-	yes, err = Exists(title)
+	yes, err = Exists(key)
 	if yes {
 		err = fmt.Errorf("post with this title already exists")
 	} else {
-		err = Set(title, data)
+		err = Set(key, data)
 		checkErr(err)
 	}
 
 	return err
 }
 
-type Response struct {
-	Announcement
-	A Announcement
-	Err error
-}
-
-func GetAnnouncements(key string) Response {
+func GetAnnouncement(key string) (Announcement,error) {
 	var a Announcement
-	var r Response
 
 	data, err := Get(key)
 	if err != nil {
-		r.A= a
+		err = fmt.Errorf("announcement with this title is not existing")
+	} else {
 		err = json.Unmarshal(data, &a)
 		checkErr(err)
-	} else {
-		r.Err = fmt.Errorf("announcement with this title is not existing")
 	}
-	return r
+	return a,err
 }

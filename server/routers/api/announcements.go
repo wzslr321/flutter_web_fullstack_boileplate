@@ -7,7 +7,10 @@ import (
 )
 
 func PostAnnouncement(ctx *gin.Context) {
-	err := redisfuncs.CreateAnnouncement("es", "es2", "es3")
+
+	key := ctx.Param("key")
+
+	err := redisfuncs.CreateAnnouncement(key , "es2", "es3")
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Announcement with this title already exists!",
@@ -19,23 +22,24 @@ func PostAnnouncement(ctx *gin.Context) {
 	}
 }
 
-func FetchAnnouncements(ctx *gin.Context) {
+func FetchAnnouncement(ctx *gin.Context) {
 
-	resp := redisfuncs.GetAnnouncements("esasaaa")
+	key := ctx.Param("key")
+	ann,err := redisfuncs.GetAnnouncement(key)
 
-	if resp.Err != nil {
+	if err != nil {
 		noMatch(ctx)
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
-			"title":       resp.Title,
-			"description": resp.Description,
-			"author":      resp.Author,
+			"title":       ann.Title,
+			"description": ann.Description,
+			"author":      ann.Author,
 		})
 	}
 }
 
 func noMatch(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
-		"status": "There is no announcement with this id.",
+		"status": "There is no announcement with this title",
 	})
 }
