@@ -7,24 +7,24 @@ import (
 	"log"
 )
 
-
-
 func checkErr(err error) {
 	if err != nil {
 		log.Fatalf("Error occured with redis announcements functions: %v", err)
 	}
 }
 
-func CreateAnnouncement(key, description, author string) error {
+func CreateAnnouncement(key, title, description, author string) error {
 
 	a := models.Announcement{
-		Title:       key,
+		Title:       title,
 		Description: description,
 		Author:      author,
 	}
 
 	data, err := json.Marshal(a)
 	checkErr(err)
+
+	fmt.Println(key)
 
 	var yes bool
 	yes, err = Exists(key)
@@ -38,15 +38,27 @@ func CreateAnnouncement(key, description, author string) error {
 	return err
 }
 
-func GetAnnouncement(key string) (models.Announcement,error) {
-	var a models.Announcement
+func GetAnnouncement(key string, all bool) (models.Announcement,[]string, error) {
+	var (
+		a    models.Announcement
+		data []byte
+		keys []string
+		err  error
+	)
 
-	data, err := Get(key)
+	if all == false {
+		data, err = Get(key)
+	} else {
+		key = "announcement*"
+		keys, err = GetKeys(key)
+		fmt.Println(keys)
+	}
+
 	if err != nil {
 		err = fmt.Errorf("announcement with this title is not existing")
-	} else {
+	} else if all != true{
 		err = json.Unmarshal(data, &a)
 		checkErr(err)
 	}
-	return a,err
+	return a, keys, err
 }
