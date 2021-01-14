@@ -8,9 +8,11 @@ import (
 
 func PostAnnouncement(ctx *gin.Context) {
 
-	key := ctx.Param("key")
+	key := ctx.PostForm("title")
+	dsc := ctx.PostForm("description")
+	a := ctx.PostForm("author")
 
-	err := redisfuncs.CreateAnnouncement(key , "es2", "es3")
+	err := redisfuncs.CreateAnnouncement(key, dsc, a)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Announcement with this title already exists!",
@@ -25,7 +27,7 @@ func PostAnnouncement(ctx *gin.Context) {
 func FetchAnnouncement(ctx *gin.Context) {
 
 	key := ctx.Param("key")
-	ann,err := redisfuncs.GetAnnouncement(key)
+	ann, err := redisfuncs.GetAnnouncement(key)
 
 	if err != nil {
 		noMatch(ctx)

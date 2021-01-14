@@ -78,8 +78,6 @@ func InitPostgre() {
 
 	_ = DB.AutoMigrate(
 		&models.Post{},
-		&models.Author{},
-		&models.Comment{},
 	)
 
 }

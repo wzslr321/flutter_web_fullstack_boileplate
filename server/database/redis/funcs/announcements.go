@@ -3,19 +3,11 @@ package redisfuncs
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/wzslr321/models"
 	"log"
 )
 
-type Announcement struct {
-	Title       string `redis:"title" form:"title" json:"title" binding:"required"`
-	Description string `redis:"description" form:"description" json:"description" binding:"required"`
-	Author      string `redis:"author" form:"author" json:"author" binding:"required"`
-}
 
-type Author struct {
-	Name    string `redis:"author_name" form:"author_name" json:"author_name" binding:"required"`
-	Surname string `redis:"author_surname" form:"author_surname" json:"author_surname" binding:"required"`
-}
 
 func checkErr(err error) {
 	if err != nil {
@@ -25,7 +17,7 @@ func checkErr(err error) {
 
 func CreateAnnouncement(key, description, author string) error {
 
-	a := Announcement{
+	a := models.Announcement{
 		Title:       key,
 		Description: description,
 		Author:      author,
@@ -46,8 +38,8 @@ func CreateAnnouncement(key, description, author string) error {
 	return err
 }
 
-func GetAnnouncement(key string) (Announcement,error) {
-	var a Announcement
+func GetAnnouncement(key string) (models.Announcement,error) {
+	var a models.Announcement
 
 	data, err := Get(key)
 	if err != nil {

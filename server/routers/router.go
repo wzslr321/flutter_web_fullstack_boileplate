@@ -27,16 +27,18 @@ func InitRouter() *gin.Engine {
 
 	r.Use(gin.Recovery())
 
-	posts := r.Group("/api/posts")
+	posts := r.Group("/api/post")
 	{
-		posts.GET("/fetch/all", routers.FetchPosts)
-		posts.GET("/fetch/last", routers.FetchLastPost)
 		posts.POST("/add", routers.AddPost)
+		posts.GET("/", routers.FetchPosts)
+		posts.GET("/last", routers.FetchLastPost)
+		posts.DELETE("/:id", routers.DeletePost)
+		posts.PUT("/:id", routers.UpdatePost)
 	}
 
 	announcements := r.Group("/api/announcement")
 	{
-		announcements.POST("/add/:key", routers.PostAnnouncement)
+		announcements.POST("/add", routers.PostAnnouncement)
 		announcements.GET("/fetch/:key", routers.FetchAnnouncement)
 	}
 
