@@ -29,7 +29,7 @@ func DeletePost(id int) {
 }
 
 func UpdatePost(id int, title, description string) {
-	postgres.DB.Model(&post).Where("id=?",id).Updates(map[string]string{
+	postgres.DB.Model(&post).Where("id=?", id).Updates(map[string]string{
 		"title":       title,
 		"description": description,
 	})

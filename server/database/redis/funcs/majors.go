@@ -67,23 +67,23 @@ func GetKeys(pattern string) ([]string, error) {
 	defer conn.Close()
 
 	var (
-		i int
+		i    int
 		keys []string
 	)
 
 	for {
-		arr, err := redis.Values(conn.Do("SCAN", i,"MATCH",pattern))
+		arr, err := redis.Values(conn.Do("SCAN", i, "MATCH", pattern))
 		if err != nil {
 			log.Printf("failed to retrieve keys: %v", pattern)
 		}
-		i,_ = redis.Int(arr[0],nil)
-		k,_ := redis.Strings(arr[1],nil)
-		keys = append(keys,k...)
+		i, _ = redis.Int(arr[0], nil)
+		k, _ := redis.Strings(arr[1], nil)
+		keys = append(keys, k...)
 
 		if i == 0 {
 			break
 		}
 	}
 
-	return keys,nil
+	return keys, nil
 }

@@ -34,30 +34,30 @@ func AddPost(ctx *gin.Context) {
 	})
 }
 
-func DeletePost(ctx *gin.Context){
+func DeletePost(ctx *gin.Context) {
 	id := ctx.Param("id")
-	cnvid,err := strconv.Atoi(id)
+	cnvid, err := strconv.Atoi(id)
 	if err != nil {
 		log.Printf("Failed to delete a post: %v\n", err)
 	}
 	postgrefuncs.DeletePost(cnvid)
 	ctx.JSON(http.StatusOK, gin.H{
-		"status":"deleted",
+		"status": "deleted",
 	})
 }
 
-func UpdatePost(ctx *gin.Context){
+func UpdatePost(ctx *gin.Context) {
 	id := ctx.Param("id")
 	t := ctx.Param("title")
 	d := ctx.Param("description")
-	cnvid,err := strconv.Atoi(id)
+	cnvid, err := strconv.Atoi(id)
 	if err != nil {
 		log.Printf("Failed to update a post: %v\n", err)
 	}
 
-	postgrefuncs.UpdatePost(cnvid,t,d)
+	postgrefuncs.UpdatePost(cnvid, t, d)
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"status":"updated",
+		"status": "updated",
 	})
 }

@@ -13,18 +13,17 @@ func checkErr(err error) {
 	}
 }
 
-func CreateAnnouncement(key, title, description, author string) error {
+func CreateAnnouncement(key, title, description, author, id string) error {
 
 	a := models.Announcement{
 		Title:       title,
 		Description: description,
 		Author:      author,
+		Id:          id,
 	}
 
 	data, err := json.Marshal(a)
 	checkErr(err)
-
-	fmt.Println(key)
 
 	var yes bool
 	yes, err = Exists(key)
@@ -38,7 +37,7 @@ func CreateAnnouncement(key, title, description, author string) error {
 	return err
 }
 
-func GetAnnouncement(key string, all bool) (models.Announcement,[]string, error) {
+func GetAnnouncement(key string, all bool) (models.Announcement, []string, error) {
 	var (
 		a    models.Announcement
 		data []byte
@@ -56,7 +55,7 @@ func GetAnnouncement(key string, all bool) (models.Announcement,[]string, error)
 
 	if err != nil {
 		err = fmt.Errorf("announcement with this title is not existing")
-	} else if all != true{
+	} else if all != true {
 		err = json.Unmarshal(data, &a)
 		checkErr(err)
 	}

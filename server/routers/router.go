@@ -40,6 +40,7 @@ func InitRouter() *gin.Engine {
 	{
 		announcements.POST("/add/:id", routers.PostAnnouncement)
 		announcements.GET("/:key", routers.FetchAnnouncements)
+		announcements.DELETE("/:id", routers.DeleteAnnouncement)
 	}
 
 	return r
