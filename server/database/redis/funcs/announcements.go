@@ -2,43 +2,62 @@ package redisfuncs
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/wzslr321/models"
 	"log"
 )
 
-type Announcement struct {
-	Title string 		`redis:"title"  json:"title"`
-	Description string  `redis:"author" json:"description"`
-	Author string 		`redis:"author" json:"author"`
-}
-
 func checkErr(err error) {
 	if err != nil {
-		log.Fatalf("Error occured with redis announcements functions: %v",err)
+		log.Fatalf("Error occured with redis announcements functions: %v", err)
 	}
 }
 
-func CreateAnnouncement() error {
-	var M Announcement
+func CreateAnnouncement(key, title, description, author, id string) error {
 
-	M.Title = "cool"
-	M.Author = "Gary"
-	M.Description = "Hello"
+	a := models.Announcement{
+		Title:       title,
+		Description: description,
+		Author:      author,
+		Id:          id,
+	}
 
-	data,err := json.Marshal(M); checkErr(err)
+	data, err := json.Marshal(a)
+	checkErr(err)
 
-	err = Set("test", data); checkErr(err)
+	var yes bool
+	yes, err = Exists(key)
+	if yes {
+		err = fmt.Errorf("post with this title already exists")
+	} else {
+		err = Set(key, data)
+		checkErr(err)
+	}
 
 	return err
 }
 
-func GetAnnouncements() Announcement {
-	var test Announcement
+func GetAnnouncement(key string, all bool) (models.Announcement, []string, error) {
+	var (
+		a    models.Announcement
+		data []byte
+		keys []string
+		err  error
+	)
 
-	data,err := Get("test")
-	if err != nil {
-		test.Title="no-match"
+	if all == false {
+		data, err = Get(key)
+	} else {
+		key = "announcement*"
+		keys, err = GetKeys(key)
+		fmt.Println(keys)
 	}
-	err = json.Unmarshal(data,&test)
 
-	return test
+	if err != nil {
+		err = fmt.Errorf("announcement with this title is not existing")
+	} else if all != true {
+		err = json.Unmarshal(data, &a)
+		checkErr(err)
+	}
+	return a, keys, err
 }

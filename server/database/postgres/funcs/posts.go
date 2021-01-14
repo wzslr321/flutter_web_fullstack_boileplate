@@ -19,7 +19,18 @@ func FetchLastPost() models.Post {
 	return post
 }
 
-func AddPost(){
+func AddPost() {
 	firstPost := models.Post{Title: "Hello", Description: "I am first post"}
 	postgres.DB.Create(&firstPost)
+}
+
+func DeletePost(id int) {
+	postgres.DB.Delete(&post, id)
+}
+
+func UpdatePost(id int, title, description string) {
+	postgres.DB.Model(&post).Where("id=?", id).Updates(map[string]string{
+		"title":       title,
+		"description": description,
+	})
 }
