@@ -20,16 +20,17 @@ func PostAnnouncement(ctx *gin.Context) {
 }
 
 func FetchAnnouncements(ctx *gin.Context) {
-	ann := redisfuncs.GetAnnouncements()
 
-	if ann.Title != "" {
-		ctx.JSON(http.StatusOK, gin.H{
-			"title":       ann.Title,
-			"description": ann.Description,
-			"author":      ann.Author,
-		})
-	} else {
+	resp := redisfuncs.GetAnnouncements("esasaaa")
+
+	if resp.Err != nil {
 		noMatch(ctx)
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{
+			"title":       resp.Title,
+			"description": resp.Description,
+			"author":      resp.Author,
+		})
 	}
 }
 

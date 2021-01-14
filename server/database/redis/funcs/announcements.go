@@ -46,16 +46,23 @@ func CreateAnnouncement(title, description, author string) error {
 	return err
 }
 
-func GetAnnouncements() Announcement {
-	var test Announcement
+type Response struct {
+	Announcement
+	A Announcement
+	Err error
+}
 
-	fmt.Print("!!")
+func GetAnnouncements(key string) Response {
+	var a Announcement
+	var r Response
 
-	data, err := Get("es")
+	data, err := Get(key)
 	if err != nil {
-		test.Title = "no-match"
+		r.A= a
+		err = json.Unmarshal(data, &a)
+		checkErr(err)
+	} else {
+		r.Err = fmt.Errorf("announcement with this title is not existing")
 	}
-	err = json.Unmarshal(data, &test)
-
-	return test
+	return r
 }
