@@ -3,25 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import './providers/posts_provider.dart';
 import './screens/posts_screen/widgets/posts.dart';
 
 final addPostKey = UniqueKey();
 final valueKey = UniqueKey();
-
-final postsProvider = StateNotifierProvider((ref) {
-  return PostsList([
-    Post(
-        id: 'announcement-0',
-        title: 'FirstT',
-        description: 'FirstD',
-        author: 'Mickiewicz'),
-    Post(
-        id: 'announcement-1',
-        title: 'SecondT',
-        description: 'SecondD',
-        author: 'Słowacki'),
-  ]);
-});
 
 final posts = Provider((ref) {
   final posts = ref.watch(postsProvider.state);
