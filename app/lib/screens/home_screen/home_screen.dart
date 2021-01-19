@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final globalHomeScreen = UniqueKey();
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen(Key key) : super(key: key);
 

@@ -6,13 +6,19 @@ final postsProvider = StateNotifierProvider((ref) {
   return PostsList([
     Post(
         id: 'announcement-0',
-        title: 'First :D',
-        description: 'no siema',
+        title: 'FirstT',
+        description: 'FirstD',
         author: 'Mickiewicz'),
     Post(
         id: 'announcement-1',
-        title: 'esssssssssssS',
-        description: 'no i es',
+        title: 'SecondT',
+        description: 'SecondD',
         author: 'Słowacki'),
   ]);
+});
+
+final posts = Provider((ref) {
+  final posts = ref.watch(postsProvider.state);
+
+  return posts;
 });
