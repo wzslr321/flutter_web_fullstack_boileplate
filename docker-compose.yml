@@ -45,7 +45,8 @@ services:
   app:
     build:
       context: app
-    restart: always
+    stdin_open: true
+    tty: true
     volumes:
       - ./app:/build
     ports:

@@ -1,6 +1,7 @@
 import 'package:riverpod/riverpod.dart';
 
-import '../screens/posts_screen/widgets/posts.dart';
+import '../models/posts/post_class.dart';
+import '../models/posts/posts_list.dart';
 
 final postsProvider = StateNotifierProvider((ref) {
   return PostsList([

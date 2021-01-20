@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../posts_screen/posts_screen.dart';
+
 final globalHomeScreen = UniqueKey();
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +15,12 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter forum :D'),
       ),
-      body: const Text('xd'),
+      body: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(PostsScreen.routeName);
+        },
+        child: const Text('Go to posts'),
+      ),
     );
   }
 }

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../models/posts/post_class.dart';
+import '../../models/posts/post_item.dart';
 import '../../providers/posts_provider.dart';
-import 'widgets/post_item.dart';
-import 'widgets/posts.dart';
 import 'widgets/title.dart';
 
 final _addPostKey = UniqueKey();
+
+final currentPost = ScopedProvider<Post>(null);
 
 class PostsScreen extends HookWidget {
   const PostsScreen({Key key}) : super(key: key);
@@ -59,5 +61,3 @@ class PostsScreen extends HookWidget {
     );
   }
 }
-
-final currentPost = ScopedProvider<Post>(null);
