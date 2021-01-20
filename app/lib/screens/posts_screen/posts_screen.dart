@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'widgets/form.dart';
 
+final _addPostFormKey = GlobalKey<FormState>();
+
 class PostsScreen extends HookWidget {
   const PostsScreen({Key key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class PostsScreen extends HookWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: AddPostForm(addPostFormKey),
+        body: AddPostForm(_addPostFormKey),
       ),
     );
   }

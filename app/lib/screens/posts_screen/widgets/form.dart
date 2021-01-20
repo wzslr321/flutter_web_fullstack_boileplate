@@ -1,12 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 
 import '../../../models/posts/post_item.dart';
 import '../../../providers/posts_provider.dart';
-import '../posts_screen.dart';
 
-final addPostFormKey = GlobalKey<FormState>();
+final _addPostFormKey = GlobalKey<FormState>();
 
 class AddPostForm extends HookWidget {
   const AddPostForm(Key key) : super(key: key);
@@ -17,11 +17,13 @@ class AddPostForm extends HookWidget {
 
     return ListView(children: [
       Form(
-          key: addPostFormKey,
-          child: Row(
+          key: _addPostFormKey,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _AddPostField(),
+              const _AddPostField('Title goes here...'),
+              const _AddPostField('Description goes here...'),
+              const _AddPostField('Author goes here...'),
               _AddPostButton(),
               if (allPosts.isNotEmpty) const Divider(height: 0),
               for (var i = 0; i < allPosts.length; i++) ...[
@@ -46,6 +48,10 @@ class AddPostForm extends HookWidget {
 }
 
 class _AddPostField extends StatelessWidget {
+  const _AddPostField(this.hintText);
+
+  final String hintText;
+
   @override
   Widget build(BuildContext context) {
     final _queryDataSize = MediaQuery.of(context).size;
@@ -53,22 +59,25 @@ class _AddPostField extends StatelessWidget {
     return Container(
       width: _queryDataSize.width * 0.5,
       child: TextFormField(
-        decoration:
-            const InputDecoration(hintText: 'Title of the post goes here'),
+        decoration: InputDecoration(hintText: hintText),
         validator: (value) {
           if (value.isEmpty) {
             return "Please, don't leave fields blank";
           }
-          // ignore: avoid_print
-          print('Is going to be implemented');
           return null;
         },
       ),
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('hintText', hintText));
+  }
 }
 
-class _AddPostButton extends HookWidget {
+class _AddPostButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

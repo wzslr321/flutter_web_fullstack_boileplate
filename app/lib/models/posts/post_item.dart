@@ -18,30 +18,45 @@ class PostItem extends HookWidget {
     final textEditingController = useTextEditingController();
     final textFieldFocusNode = useFocusNode();
 
-    return Material(
-        color: Colors.white,
-        elevation: 6,
-        child: Focus(
-          focusNode: itemFocusNode,
-          onFocusChange: (focused) {
-            focused
-                ? textEditingController.text = _post.description
-                : context.read(postsProvider).edit(
-                    id: _post.id, description: textEditingController.text);
-          },
-          child: ListTile(
-            onTap: () {
-              itemFocusNode.requestFocus();
-              textFieldFocusNode.requestFocus();
+    final _queryDataSize = MediaQuery.of(context).size;
+
+    return Container(
+      width: _queryDataSize.width * 0.45,
+      child: Material(
+          color: Colors.white,
+          elevation: 6,
+          child: Focus(
+            focusNode: itemFocusNode,
+            onFocusChange: (focused) {
+              focused
+                  ? textEditingController.text = _post.description
+                  : context.read(postsProvider).edit(
+                        id: _post.id,
+                        title: _post.title,
+                        description: textEditingController.text,
+                        author: _post.author,
+                      );
             },
-            title: isFocused
-                ? TextField(
-                    autofocus: true,
-                    focusNode: textFieldFocusNode,
-                    controller: textEditingController,
-                  )
-                : Text(_post.description),
-          ),
-        ));
+            child: ListTile(
+              onTap: () {
+                itemFocusNode.requestFocus();
+                textFieldFocusNode.requestFocus();
+              },
+              title: isFocused
+                  ? TextField(
+                      autofocus: true,
+                      focusNode: textFieldFocusNode,
+                      controller: textEditingController,
+                    )
+                  : Column(
+                      children: [
+                        Text('title: ${_post.title}'),
+                        Text('description: ${_post.description}'),
+                        Text('author: ${_post.author}'),
+                      ],
+                    ),
+            ),
+          )),
+    );
   }
 }

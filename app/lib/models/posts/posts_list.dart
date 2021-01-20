@@ -13,15 +13,19 @@ class PostsList extends StateNotifier<List<Post>> {
     ];
   }
 
-  void edit({@required String id, @required String description}) {
+  void edit(
+      {@required String id,
+      @required String title,
+      @required String description,
+      @required String author}) {
     state = [
       for (final post in state)
         if (post.id == id)
           Post(
-            id: post.id,
-            title: post.title,
-            description: post.description,
-            author: post.author,
+            id: id,
+            title: title,
+            description: description,
+            author: author,
           )
         else
           post,
