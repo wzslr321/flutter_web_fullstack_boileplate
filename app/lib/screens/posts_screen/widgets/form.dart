@@ -54,11 +54,13 @@ class _AddPostField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _newPostController = useTextEditingController();
     final _queryDataSize = MediaQuery.of(context).size;
 
     return Container(
       width: _queryDataSize.width * 0.5,
       child: TextFormField(
+        controller: _newPostController,
         decoration: InputDecoration(hintText: hintText),
         validator: (value) {
           if (value.isEmpty) {
@@ -77,12 +79,14 @@ class _AddPostField extends StatelessWidget {
   }
 }
 
-class _AddPostButton extends StatelessWidget {
+class _AddPostButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () =>
-            context.read(postsProvider).add('title', 'description', 'author'),
+        onPressed: () => {
+              context.read(postsProvider).add('title', 'description', 'author'),
+              // _newPostController.clear(),
+            },
         child: const Text('Add post'));
   }
 }
