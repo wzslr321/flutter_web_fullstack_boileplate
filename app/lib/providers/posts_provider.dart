@@ -23,3 +23,5 @@ final posts = Provider((ref) {
 
   return posts;
 });
+
+final currentPost = ScopedProvider<Post>(null);
