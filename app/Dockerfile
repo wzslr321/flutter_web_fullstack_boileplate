@@ -12,7 +12,5 @@ RUN flutter channel beta \
 
 COPY . .
 
-RUN  flutter pub get \
-     && flutter build web
 
 

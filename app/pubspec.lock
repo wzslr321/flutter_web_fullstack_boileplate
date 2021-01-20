@@ -130,6 +130,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_hooks:
+    dependency: "direct main"
+    description:
+      name: flutter_hooks
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.0"
+  flutter_riverpod:
+    dependency: transitive
+    description:
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.2"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -142,6 +156,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
   fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
@@ -154,6 +175,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  hooks_riverpod:
+    dependency: "direct main"
+    description:
+      name: hooks_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.2"
   http:
     dependency: "direct main"
     description:
@@ -187,6 +215,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3-nullsafety.3"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   json_rpc_2:
     dependency: transitive
     description:
@@ -215,13 +250,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.6"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   node_interop:
     dependency: transitive
     description:
@@ -278,13 +306,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0-nullsafety.4"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.3.2+3"
   pub_semver:
     dependency: transitive
     description:
@@ -292,6 +313,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
+  riverpod:
+    dependency: "direct main"
+    description:
+      name: riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -325,6 +353,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.6"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   stream_channel:
     dependency: transitive
     description:
@@ -374,6 +409,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.5"
+  uuid:
+    dependency: "direct main"
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.2"
   vector_math:
     dependency: transitive
     description:
@@ -418,4 +460,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.16.0 <2.0.0"
+  flutter: ">=1.20.0 <2.0.0"

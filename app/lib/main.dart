@@ -1,13 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import './providers/tasks_provider.dart';
-import './screens/home_screen/home_screen.dart';
-import './screens/page_not_found_screen/page_not_found.dart';
-import './screens/tasks_screen/tasks_screen.dart';
+import 'screens/home_screen/home_screen.dart';
+import 'screens/page_not_found_screen/page_not_found.dart';
+import 'screens/posts_screen/posts_screen.dart';
+
+final valueKey = UniqueKey();
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,30 +17,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => TasksProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Forum',
-        theme: ThemeData(
+    return MaterialApp(
+      title: 'FGGP Boilerplate',
+      theme: ThemeData(
           primarySwatch: Colors.cyan,
-          accentColor: Colors.indigo,
-          fontFamily: 'Roboto',
-        ),
-        initialRoute: '/',
-        routes: {
-          HomeScreen.routeName: (context) => HomeScreen(),
-          TasksScreen.routeName: (context) => TasksScreen(),
-        },
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute<dynamic>(
-            builder: (ctx) => PageNotFoundScreen(),
-          );
-        },
-      ),
+          accentColor: Colors.cyanAccent,
+          fontFamily: 'Roboto' // Default font of flutter apps.
+          ),
+      home: HomeScreen(globalHomeScreen),
+      routes: {
+        PostsScreen.routeName: (ctx) => const PostsScreen(),
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute<PageNotFoundScreen>(
+            builder: (ctx) => const PageNotFoundScreen());
+      },
     );
   }
 }

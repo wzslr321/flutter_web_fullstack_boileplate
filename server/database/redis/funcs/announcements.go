@@ -50,7 +50,6 @@ func GetAnnouncement(key string, all bool) (models.Announcement, []string, error
 	} else {
 		key = "announcement*"
 		keys, err = GetKeys(key)
-		fmt.Println(keys)
 	}
 
 	if err != nil {
