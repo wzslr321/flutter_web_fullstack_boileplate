@@ -6,7 +6,7 @@ import '../posts_screen/posts_screen.dart';
 final globalHomeScreen = UniqueKey();
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen(Key key) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
 
   static const routeName = '/';
 

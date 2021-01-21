@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/rs/cors"
 	"github.com/wzslr321/database/postgres"
 	redisdb "github.com/wzslr321/database/redis"
 	"github.com/wzslr321/routers"
@@ -24,9 +25,8 @@ func init() {
 func main() {
 
 	addr := fmt.Sprintf(":%s", settings.ServerSettings.Addr)
-
 	port := addr
-	router := routers.InitRouter()
+	router := cors.Default().Handler(routers.InitRouter())
 	readTimeout := settings.ServerSettings.ReadTimeout
 	writeTimeout := settings.ServerSettings.WriteTimeout
 	mxHdrBytes := settings.ServerSettings.MaxHeaderBytes

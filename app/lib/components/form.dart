@@ -25,6 +25,10 @@ class FormComponent extends HookWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              ElevatedButton(
+                onPressed: () => context.read(postsProvider).fetch(),
+                child: const Text('Fetch'),
+              ),
               _AddPostField('Title goes here...', newPostTitleController),
               _AddPostField(
                   'Description goes here...', newPostDescriptionController),
