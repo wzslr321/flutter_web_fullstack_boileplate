@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:website/screens/announcements_screen/announcements_screen.dart';
 
 import 'screens/home_screen/home_screen.dart';
 import 'screens/page_not_found_screen/page_not_found.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       home: HomeScreen(globalHomeScreen),
       routes: {
         PostsScreen.routeName: (ctx) => const PostsScreen(),
+        AnnouncementsScreen.routeName: (ctx) => const AnnouncementsScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute<PageNotFoundScreen>(

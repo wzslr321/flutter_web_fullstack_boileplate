@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 
-import '../../../models/posts/post_item.dart';
-import '../../../providers/posts_provider.dart';
+import '../models/posts/post_item.dart';
+import '../providers/posts_provider.dart';
 
-class AddPostForm extends HookWidget {
-  const AddPostForm(Key key) : super(key: key);
+final _addPostFormKey = GlobalKey<FormState>();
+
+class FormComponent extends HookWidget {
+  const FormComponent({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _addPostFormKey = GlobalKey<FormState>();
     final allPosts = useProvider(posts);
 
     final newPostTitleController = useTextEditingController();
@@ -55,7 +56,7 @@ class AddPostForm extends HookWidget {
   }
 }
 
-class _AddPostField extends HookWidget {
+class _AddPostField extends StatelessWidget {
   const _AddPostField(this.hintText, this.controller);
 
   final String hintText;
@@ -114,6 +115,7 @@ class _AddPostButton extends HookWidget {
         child: const Text('Add post'));
   }
 
+  // Debug properties
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

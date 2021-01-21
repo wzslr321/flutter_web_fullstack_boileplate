@@ -7,14 +7,9 @@ final postsProvider = StateNotifierProvider((ref) {
   return PostsList([
     Post(
         id: 'announcement-0',
-        title: 'FirstT',
-        description: 'FirstD',
-        author: 'Mickiewicz'),
-    Post(
-        id: 'announcement-1',
-        title: 'SecondT',
-        description: 'SecondD',
-        author: 'Słowacki'),
+        title: 'Hard-coded title',
+        description: 'Hard-coded description',
+        author: 'Hard-coded author'),
   ]);
 });
 
