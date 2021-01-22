@@ -1,22 +1,29 @@
-import 'package:uuid/uuid.dart';
-
-var _uuid = Uuid();
-
 class Post {
   Post({
     this.title,
     this.description,
     this.author,
-    String id,
-  }) : id = id ?? _uuid.v4();
+    this.id,
+  });
 
-  final String id;
-  final String title;
-  final String description;
-  final String author;
+  Post.fromJson(Map<String, dynamic> json) {
+    title = json['title'].toString();
+    description = json['description'].toString();
+    author = json['author'].toString();
+    id = json['id'].toString();
+  }
 
-  @override
-  String toString() {
-    return 'Post(title: $title, description: $description, author: $author)';
+  String id;
+  String title;
+  String description;
+  String author;
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['title'] = title;
+    data['description'] = description;
+    data['author'] = author;
+    data['id'] = id;
+    return data;
   }
 }

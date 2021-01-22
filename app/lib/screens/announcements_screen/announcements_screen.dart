@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../components/form.dart';
 
-class PostsScreen extends HookWidget {
-  const PostsScreen({Key key}) : super(key: key);
+class AnnouncementsScreen extends HookWidget {
+  const AnnouncementsScreen({Key key}) : super(key: key);
 
-  static const routeName = '/posts';
+  static const routeName = '/announcements';
 
   @override
   Widget build(BuildContext context) {
