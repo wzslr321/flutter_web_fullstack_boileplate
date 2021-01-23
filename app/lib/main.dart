@@ -6,7 +6,7 @@ import 'screens/announcements_screen/announcements_screen.dart';
 import 'screens/home_screen/home_screen.dart';
 import 'screens/page_not_found_screen/page_not_found.dart';
 import 'screens/posts_screen/posts_screen.dart';
-
+ 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
