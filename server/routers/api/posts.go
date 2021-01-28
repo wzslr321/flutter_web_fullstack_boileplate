@@ -9,13 +9,10 @@ import (
 )
 
 func FetchPosts(ctx *gin.Context) {
+
 	posts := postgrefuncs.FetchPosts()
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"title":       posts.Title,
-		"description": posts.Description,
-	})
-
+	ctx.JSON(200,posts)
 }
 
 func FetchLastPost(ctx *gin.Context) {

@@ -1,29 +1,39 @@
 class Post {
+
   Post({
+    this.createdAt,
+    this.updatedAt,
+    this.iD,
     this.title,
     this.description,
     this.author,
-    this.id,
   });
 
   Post.fromJson(Map<String, dynamic> json) {
-    title = json['title'].toString();
-    description = json['description'].toString();
-    author = json['author'].toString();
-    id = json['id'].toString();
+    createdAt = json['CreatedAt'] as String;
+    updatedAt = json['UpdatedAt'] as String;
+    iD = json['ID'] as int;
+    title = json['title'] as String;
+    description = json['description'] as String;
+    author = json['author'] as String;
   }
 
-  String id;
+  String createdAt;
+  String updatedAt;
+  int iD;
   String title;
   String description;
   String author;
 
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['ID'] = iD;
     data['title'] = title;
     data['description'] = description;
     data['author'] = author;
-    data['id'] = id;
     return data;
   }
 }

@@ -9,4 +9,5 @@ type Post struct {
 	ID          int    `gorm:"primaryKey"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
+	Author      string `json:"author"`
 }

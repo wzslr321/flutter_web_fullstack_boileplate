@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../components/form.dart';
-
 class AnnouncementsScreen extends HookWidget {
   const AnnouncementsScreen({Key key}) : super(key: key);
 
@@ -13,7 +11,7 @@ class AnnouncementsScreen extends HookWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: const Scaffold(
-        body: FormComponent(),
+        body: Text('gonna be implemented'),
       ),
     );
   }
