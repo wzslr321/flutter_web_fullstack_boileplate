@@ -22,7 +22,7 @@
 
 <br/>
 
-<b> 2. </b> Clone the repository to the folder of your choice, by executing: `git clone https://github.com/wzslr321/flutter_website_todo.git` in the console.
+<b> 2. </b> Clone the repository to the folder of your choice, by executing: `git clone https://github.com/wzslr321/fggp.git` in the console.
 
 <br/>
 
