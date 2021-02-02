@@ -3,7 +3,7 @@ class Post {
   Post({
     this.createdAt,
     this.updatedAt,
-    this.iD,
+    this.id,
     this.title,
     this.description,
     this.author,
@@ -12,7 +12,7 @@ class Post {
   Post.fromJson(Map<String, dynamic> json) {
     createdAt = json['CreatedAt'] as String;
     updatedAt = json['UpdatedAt'] as String;
-    iD = json['ID'] as int;
+    id = json['ID'] as int;
     title = json['title'] as String;
     description = json['description'] as String;
     author = json['author'] as String;
@@ -20,7 +20,7 @@ class Post {
 
   String createdAt;
   String updatedAt;
-  int iD;
+  int id;
   String title;
   String description;
   String author;
@@ -30,7 +30,7 @@ class Post {
     final data = <String, dynamic>{};
     data['CreatedAt'] = createdAt;
     data['UpdatedAt'] = updatedAt;
-    data['ID'] = iD;
+    data['ID'] = id;
     data['title'] = title;
     data['description'] = description;
     data['author'] = author;

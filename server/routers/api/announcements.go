@@ -63,9 +63,7 @@ func FetchAnnouncements(ctx *gin.Context) {
 			anns = append(anns, a)
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{
-			"announcments": anns,
-		})
+		ctx.JSON(http.StatusOK,anns)
 	}
 }
 
