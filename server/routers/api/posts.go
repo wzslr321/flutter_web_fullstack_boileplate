@@ -12,7 +12,7 @@ func FetchPosts(ctx *gin.Context) {
 
 	posts := postgrefuncs.FetchPosts()
 
-	ctx.JSON(200,posts)
+	ctx.JSON(http.StatusOK,posts)
 }
 
 func FetchLastPost(ctx *gin.Context) {

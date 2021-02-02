@@ -14,7 +14,7 @@ class PostsScreen extends ConsumerWidget {
     final posts = watch(postsStateFuture);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fetching API using riverpod'),
+        title: const Text('FGGP'),
       ),
       body: posts.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
