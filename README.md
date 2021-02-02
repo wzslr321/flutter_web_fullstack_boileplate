@@ -6,7 +6,7 @@
 <p align = "center">
   <i>
     This repository is a fully dockerized application, which by default is a <b>web</b> app, but modyfing Dockerfiles lets to run it on <b> mobile </b> device too. 
-    Front-end is written in <b> Flutter </b>, Back-end in <b> Golang with Gin </b> framework. Databases are <b> PostgreSQL (with GORM) </b> and <b> Redis ( Redigo )</b>. Reverse proxy with <b> Nginx </b>. It contains simple CRUD functions for both, Postgresql and Redis. 
+    Front-end is written in <b> Flutter </b>, Back-end in <b> Golang with Gin </b> framework. Databases are <b> PostgreSQL (with GORM) </b> and <b> Redis ( Redigo )</b>. Reverse proxy with <b> Nginx </b>. It contains simple CRUD functions for both, Postgresql and Redis. Back-end is finished, Front-end has only fetch functions implemented.
   </i>
 </p>
 
@@ -57,43 +57,46 @@ When the installation will be finished, you should see this output:
 
 ---
 
-### Project tree
+### Project tree ( without meaningless files)
 ```bash
--- LICENSE
-|-- README.md
+|-- LICENSE
 |-- all_lint_rules.yaml
 |-- analysis_options.yaml
-|-- app 
+|-- app
 |   |-- Dockerfile
 |   |-- README.md
-|   |-- android (...) --> build on android
 |   |-- assets
 |   |   |-- fonts
 |   |   `-- images
-|   |-- integration_test(...)
-|   |-- ios(...) --> build on ios
 |   |-- lib
+|   |   |-- components
 |   |   |-- constants.dart
 |   |   |-- main.dart
 |   |   |-- models
-|   |   |   `-- http_exception.dart
+|   |   |   |-- announcements
+|   |   |   |   |-- announcement_class.dart
+|   |   |   |   `-- announcement_list.dart
+|   |   |   |-- http_exception.dart
+|   |   |   `-- posts
+|   |   |       |-- post_class.dart
+|   |   |       `-- posts_list.dart
 |   |   |-- providers
-|   |   |   `-- tasks_provider.dart
+|   |   |   |-- announcements_state.dart
+|   |   |   `-- posts_state.dart
 |   |   `-- screens
+|   |       |-- announcements_screen
+|   |       |   `-- announcements_screen.dart
 |   |       |-- home_screen
 |   |       |   `-- home_screen.dart
 |   |       |-- loading_screen.dart
 |   |       |-- page_not_found_screen
 |   |       |   `-- page_not_found.dart
-|   |       `-- tasks_screen
-|   |           `-- tasks_screen.dart
-|   |-- pubspec.lock
+|   |       `-- posts_screen
+|   |           |-- posts_screen.dart
+|   |           `-- widgets
+|   |               `-- title.dart
 |   |-- pubspec.yaml
-|   |-- test
-|   |   `-- widget_test.dart
 |   `-- web
-|       |-- favicon.png
-|       |-- icons
 |       |-- index.html
 |       `-- manifest.json
 |-- docker-compose.yml
@@ -119,7 +122,6 @@ When the installation will be finished, you should see this output:
     |       |   `-- majors.go
     |       `-- redis.go
     |-- go.mod
-    |-- go.sum
     |-- main.go
     |-- main_test.go
     |-- models
@@ -132,5 +134,6 @@ When the installation will be finished, you should see this output:
     |   `-- router.go
     |-- settings
     |   `-- settings.go
+
 ```
 
