@@ -16,7 +16,7 @@ class PostsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _posts = useProvider(postsListProvider);
+    final _posts = useProvider(postsListNotifier.state);
     final _newPostsController = useTextEditingController();
 
     return GestureDetector(
