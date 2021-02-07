@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../components/form.dart';
 
-import '../../providers/posts_state.dart';
+import '../../providers/posts_provider.dart';
 
 import './widgets/post_item.dart';
-import './widgets/title.dart';
 
 final _addPostKey = UniqueKey();
 
@@ -17,7 +17,10 @@ class PostsScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _posts = useProvider(postsListNotifier.state);
-    final _newPostsController = useTextEditingController();
+
+    final _titleController = useTextEditingController();
+    final _descriptionController = useTextEditingController();
+    final _authorController = useTextEditingController();
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -25,17 +28,10 @@ class PostsScreen extends HookWidget {
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           children: [
-            const PostTitle(),
-            TextField(
+            CustomForm(
               key: _addPostKey,
-              controller: _newPostsController,
-              decoration: const InputDecoration(
-                labelText: 'What is on your mind?',
-              ),
-              onSubmitted: (value) {
-                context.read(postsListNotifier).add(value, 'test', 'test2');
-                _newPostsController.clear();
-              },
+              controllers: [_titleController,_descriptionController,_authorController],
+              hintTexts: const ['title','description','author'],
             ),
             if (_posts.isNotEmpty) const Divider(height: 0),
             for (var i = 0; i < _posts.length; i++) ...[

@@ -10,14 +10,13 @@ import '../../models/posts/post_class.dart';
 
 import 'post_class.dart';
 
-
 const _postApiUrl = 'http://localhost/api/post/';
 
 List<Post> parsePosts(String response) {
   final el = json.decode(response) as List<dynamic>;
   final posts = el
       .map((dynamic e) =>
-  e == null ? null : Post.fromJson(e as Map<String, dynamic>))
+          e == null ? null : Post.fromJson(e as Map<String, dynamic>))
       .toList();
   return posts;
 }
@@ -33,22 +32,24 @@ Future<List<Post>> fetchPosts() async {
 }
 
 class PostsList extends StateNotifier<List<Post>> {
-  PostsList([List<Post> initialPosts]) :  super(initialPosts ?? []);
+  PostsList([List<Post> initialPosts]) : super(initialPosts ?? []);
 
   Future<List<Post>> fetch() async {
     final posts = await fetchPosts();
     return posts;
   }
 
-  void add(String title, String description, String author) {
-    try{
-      http.post('${_postApiUrl}add');
-    } catch(err) {
+  void add(List<String> values) {
+    try {
+      // I am aware of those urls ugliness, I am planning to deal with it.
+      http.post(
+          '${_postApiUrl}add?title=${values[0]}&description=${values[1]}&author=${values[2]}');
+    } catch (err) {
       throw HttpException('Error occurred while adding a post: $err');
     }
     state = [
       ...state,
-      Post(title: title, description: description, author: author)
+      Post(title: values[0], description: values[1], author: values[2])
     ];
   }
 
@@ -58,7 +59,8 @@ class PostsList extends StateNotifier<List<Post>> {
       @required String description,
       @required String author}) {
     try {
-      http.patch('$_postApiUrl$id?title=$title&description=$description&author=$author');
+      http.patch(
+          '$_postApiUrl$id?title=$title&description=$description&author=$author');
     } catch (err) {
       throw HttpException('Error occurred while editing a post: $err');
     }
@@ -79,7 +81,7 @@ class PostsList extends StateNotifier<List<Post>> {
   void remove(Post target) {
     try {
       http.delete(_postApiUrl + target.id.toString());
-    } catch(err) {
+    } catch (err) {
       throw HttpException('Error occurred while removing a post: $err');
     }
     state = state.where((post) => post.id != target.id).toList();

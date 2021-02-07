@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../../providers/announcements_state.dart';
+import '../../providers/announcements_provider.dart';
 
 class AnnouncementsScreen extends ConsumerWidget {
   const AnnouncementsScreen({Key key}) : super(key: key);
