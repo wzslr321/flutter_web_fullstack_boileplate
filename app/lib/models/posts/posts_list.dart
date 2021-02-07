@@ -35,6 +35,15 @@ Future<List<Post>> fetchPosts() async {
 class PostsList extends StateNotifier<List<Post>> {
   PostsList([List<Post> initialPosts]) :  super(initialPosts ?? []);
 
+  List<Post> fetch()  {
+    List<Post> posts;
+    fetchPosts().then((value){
+      posts = value;
+    });
+    debugPrint(posts.toString());
+    return posts;
+  }
+
   void add(String title, String description, String author) {
     state = [
       ...state,
