@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func FetchPosts(ctx *gin.Context) {
@@ -45,16 +46,23 @@ func DeletePost(ctx *gin.Context) {
 
 func UpdatePost(ctx *gin.Context) {
 	id := ctx.Param("id")
-	t := ctx.Param("title")
-	d := ctx.Param("description")
-	cnvid, err := strconv.Atoi(id)
+	t := ctx.Query("title")
+	d := ctx.Query("description")
+	a := ctx.Query("author")
+
+	i := strings.ReplaceAll(id," ","")
+	cnvid, err := strconv.Atoi(i)
 	if err != nil {
 		log.Printf("Failed to update a post: %v\n", err)
 	}
 
-	postgrefuncs.UpdatePost(cnvid, t, d)
+	postgrefuncs.UpdatePost(cnvid, t, d, a)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "updated",
+		"id":cnvid,
+		"title":t,
+		"description": d,
+		"author":a,
 	})
 }

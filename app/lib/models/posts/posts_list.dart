@@ -41,6 +41,11 @@ class PostsList extends StateNotifier<List<Post>> {
   }
 
   void add(String title, String description, String author) {
+    try{
+      http.post('${_postApiUrl}add');
+    } catch(err) {
+      throw HttpException('Error occurred while adding a post: $err');
+    }
     state = [
       ...state,
       Post(title: title, description: description, author: author)
@@ -52,6 +57,11 @@ class PostsList extends StateNotifier<List<Post>> {
       @required String title,
       @required String description,
       @required String author}) {
+    try {
+      http.patch('$_postApiUrl$id?title=$title&description=$description&author=$author');
+    } catch (err) {
+      throw HttpException('Error occurred while editing a post: $err');
+    }
     state = [
       for (final post in state)
         if (post.id == id)
@@ -67,6 +77,11 @@ class PostsList extends StateNotifier<List<Post>> {
   }
 
   void remove(Post target) {
+    try {
+      http.delete(_postApiUrl + target.id.toString());
+    } catch(err) {
+      throw HttpException('Error occurred while removing a post: $err');
+    }
     state = state.where((post) => post.id != target.id).toList();
   }
 }

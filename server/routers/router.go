@@ -33,7 +33,7 @@ func InitRouter() *gin.Engine {
 		posts.GET("/", routers.FetchPosts)
 		posts.GET("/last", routers.FetchLastPost)
 		posts.DELETE("/:id", routers.DeletePost)
-		posts.PUT("/:id", routers.UpdatePost)
+		posts.PATCH("/:id", routers.UpdatePost)
 	}
 
 	announcements := r.Group("/api/announcement")

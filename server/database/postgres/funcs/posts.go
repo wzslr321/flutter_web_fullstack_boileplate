@@ -36,9 +36,10 @@ func DeletePost(id int) {
 	postgres.DB.Delete(&post, id)
 }
 
-func UpdatePost(id int, title, description string) {
-	postgres.DB.Model(&post).Where("id=?", id).Updates(map[string]string{
+func UpdatePost(id int, title, description,author string) {
+	postgres.DB.Model(&post).Where("id=?", id).Updates(map[string]interface{}{
 		"title":       title,
 		"description": description,
+		"author": author,
 	})
 }
