@@ -26,9 +26,15 @@ func FetchLastPost(ctx *gin.Context) {
 }
 
 func AddPost(ctx *gin.Context) {
-	postgrefuncs.AddPost()
+
+	t := ctx.Query("title")
+	d := ctx.Query("description")
+	a := ctx.Query("author")
+
+	id := postgrefuncs.AddPost(t,d,a)
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"status": "Cool",
+		"id":id,
 	})
 }
 

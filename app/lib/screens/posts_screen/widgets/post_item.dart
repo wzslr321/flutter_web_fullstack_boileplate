@@ -4,44 +4,24 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../providers/posts_provider.dart';
 
+import 'post_field.dart';
+
 class PostItem extends HookWidget {
   const PostItem({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _post = useProvider(currentPost);
-    final itemFocusNode = useFocusNode();
-
-    useListenable(itemFocusNode);
-    final isFocused = itemFocusNode.hasFocus;
-
-    final textEditingController = useTextEditingController();
-    final textFieldFocusNode = useFocusNode();
 
     return Material(
         color: Colors.white,
         elevation: 6,
-        child: Focus(
-          focusNode: itemFocusNode,
-          onFocusChange: (focused) {
-            focused
-                ? textEditingController.text = _post.description
-                : context.read(postsListNotifier).edit(
-                id: _post.id, description: textEditingController.text, author: 'Test', title: 'Test 2');
-          },
-          child: ListTile(
-            onTap: () {
-              itemFocusNode.requestFocus();
-              textFieldFocusNode.requestFocus();
-            },
-            title: isFocused
-                ? TextField(
-              autofocus: true,
-              focusNode: textFieldFocusNode,
-              controller: textEditingController,
-            )
-                : Text(_post.description),
-          ),
+        child: Column(
+          children: [
+            PostField(controllerText: _post.title, fieldName:'title', ),
+            PostField(controllerText: _post.description, fieldName:'description',),
+            PostField(controllerText: _post.author, fieldName:'author',),
+          ],
         ));
   }
 }

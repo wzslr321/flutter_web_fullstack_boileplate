@@ -4,13 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../models/http_exception.dart';
 import '../../models/posts/post_class.dart';
+import '../../models/posts/post_id_response.dart';
 
 import 'post_class.dart';
 
 const _postApiUrl = 'http://localhost/api/post/';
+
+Uuid uuid = Uuid();
 
 List<Post> parsePosts(String response) {
   final el = json.decode(response) as List<dynamic>;
@@ -31,6 +35,22 @@ Future<List<Post>> fetchPosts() async {
   }
 }
 
+PostID parseId(String response) {
+  final resp = json.decode(response) as Map<String,dynamic>;
+  final id =  PostID.fromJson(resp);
+  return id;
+}
+
+Future<PostID> fetchId(String url ) async {
+  final response = await http.post(url);
+  if (response.statusCode == 200) {
+    return compute(parseId, response.body);
+  }
+  {
+    throw HttpException("Couldn't fetch post id");
+  }
+}
+
 class PostsList extends StateNotifier<List<Post>> {
   PostsList([List<Post> initialPosts]) : super(initialPosts ?? []);
 
@@ -39,18 +59,21 @@ class PostsList extends StateNotifier<List<Post>> {
     return posts;
   }
 
-  void add(List<String> values) {
+  Future<void> add(List<String> values) async {
+    // I am aware of those urls ugliness, I am planning to deal with it.
+    final _addPostUrl =
+        '${_postApiUrl}add?title=${values[0]}&description=${values[1]}&author=${values[2]}';
     try {
-      // I am aware of those urls ugliness, I am planning to deal with it.
-      http.post(
-          '${_postApiUrl}add?title=${values[0]}&description=${values[1]}&author=${values[2]}');
+      final postId = await fetchId(_addPostUrl);
+      state = [
+        ...state,
+        Post(id:postId.id, title: values[0], description: values[1], author: values[2])
+      ];
+
     } catch (err) {
       throw HttpException('Error occurred while adding a post: $err');
     }
-    state = [
-      ...state,
-      Post(title: values[0], description: values[1], author: values[2])
-    ];
+
   }
 
   void edit(

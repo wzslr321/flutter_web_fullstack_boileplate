@@ -27,9 +27,10 @@ func FetchLastPost() models.Post {
 	return post
 }
 
-func AddPost() {
-	firstPost := models.Post{Title: "xd", Description: "I t post", Author:"Cretix"}
-	postgres.DB.Create(&firstPost)
+func AddPost( title,description,author string) int{
+	newPost := models.Post{Title:title, Description: description, Author:author}
+	postgres.DB.Create(&newPost)
+	return newPost.ID
 }
 
 func DeletePost(id int) {
