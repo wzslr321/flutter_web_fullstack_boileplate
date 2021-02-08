@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/posts_provider.dart';
+import '../../providers/announcements_provider.dart';
 
 class CustomButton extends HookWidget {
   const CustomButton({Key key, @required this.controllers}) : super(key: key);
@@ -30,7 +30,7 @@ class CustomButton extends HookWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () => {
-              context.read(postsListNotifier).add(_getControllerValues()),
+              context.read(announcementsListNotifier).add(_getControllerValues()),
               _clearController()
             },
         child: const Text('Add post'));

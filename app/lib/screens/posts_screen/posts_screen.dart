@@ -27,7 +27,7 @@ class PostsScreen extends HookWidget {
       child: Scaffold(
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-          children: [
+          children: <Widget> [
             CustomForm(
               key: _addPostKey,
               controllers: [

@@ -12,21 +12,21 @@ import (
 func PostAnnouncement(ctx *gin.Context) {
 
 	var (
-		id    = ctx.Param("id")
-		title = ctx.PostForm("title")
-		dsc   = ctx.PostForm("description")
-		a     = ctx.PostForm("author")
-		key   = fmt.Sprintf("announcment %s", id)
+		title = ctx.Query("title")
+		a     = ctx.Query("author")
+		key   = fmt.Sprintf("announcement%s", title)
 	)
 
-	err := redisfuncs.CreateAnnouncement(key, title, dsc, a, id)
+	err := redisfuncs.CreateAnnouncement(key, title, a)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"status": "Announcement with this title already exists!",
 		})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
-			"status": "posted",
+			"title":  title,
+			"author": a,
+			"key":    key,
 		})
 	}
 }
@@ -51,29 +51,36 @@ func FetchAnnouncements(ctx *gin.Context) {
 		noMatch(ctx)
 	} else if all != "true" {
 		ctx.JSON(http.StatusOK, gin.H{
-			"title":       a.Title,
-			"description": a.Description,
-			"author":      a.Author,
+			"key":    key,
+			"title":  a.Title,
+			"author": a.Author,
 		})
 	} else {
-		var anns []models.Announcement
+		var anns = []models.Announcement{}
 
 		for _, k := range keys {
 			a, _, err = redisfuncs.GetAnnouncement(k, false)
 			anns = append(anns, a)
 		}
 
-		ctx.JSON(http.StatusOK,anns)
+		ctx.JSON(http.StatusOK, anns)
+
 	}
 }
 
 func DeleteAnnouncement(ctx *gin.Context) {
-	key := ctx.Param("id")
+	key := ctx.Param("key")
 
 	err := redisfuncs.Delete(key)
 	if err != nil {
 		log.Printf("Failed to delete announcement: %v", err)
 	}
+}
+
+func UpdateAnnouncemnet(ctx *gin.Context) {
+	key := ctx.Param("key")
+
+	err := redisfuncs.
 }
 
 func noMatch(ctx *gin.Context) {
