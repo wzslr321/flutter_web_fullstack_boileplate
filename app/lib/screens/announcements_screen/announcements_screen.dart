@@ -10,7 +10,8 @@ class AnnouncementsScreen extends ConsumerWidget {
   static const routeName = '/announcements';
 
   @override
-  Widget build(BuildContext context, T Function<T>(ProviderBase<Object,T> provider) watch) {
+  Widget build(BuildContext context,
+      T Function<T>(ProviderBase<Object, T> provider) watch) {
     final announcements = watch(announcementStateFuture);
     return Scaffold(
       appBar: AppBar(

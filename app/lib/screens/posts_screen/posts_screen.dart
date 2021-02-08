@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../components/form.dart';
+import '../../components/form/form.dart';
 
 import '../../providers/posts_provider.dart';
 
@@ -30,8 +30,12 @@ class PostsScreen extends HookWidget {
           children: [
             CustomForm(
               key: _addPostKey,
-              controllers: [_titleController,_descriptionController,_authorController],
-              hintTexts: const ['title','description','author'],
+              controllers: [
+                _titleController,
+                _descriptionController,
+                _authorController
+              ],
+              hintTexts: const ['title', 'description', 'author'],
             ),
             if (_posts.isNotEmpty) const Divider(height: 0),
             for (var i = 0; i < _posts.length; i++) ...[

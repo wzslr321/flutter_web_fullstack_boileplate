@@ -1,5 +1,4 @@
 class Post {
-
   Post({
     this.createdAt,
     this.updatedAt,
@@ -24,7 +23,6 @@ class Post {
   String title;
   String description;
   String author;
-
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

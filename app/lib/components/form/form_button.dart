@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/posts_provider.dart';
-
+import '../../providers/posts_provider.dart';
 
 class CustomButton extends HookWidget {
-  // ignore: use_key_in_widget_constructors
-  const CustomButton(this.controllers);
+  const CustomButton({Key key, @required this.controllers}) : super(key: key);
 
   final List<TextEditingController> controllers;
 
@@ -21,7 +19,7 @@ class CustomButton extends HookWidget {
   List<String> _getControllerValues() {
     final controllerValues = <String>[];
     for (final controller in controllers) {
-      if(controller != null) {
+      if (controller != null) {
         controllerValues.add(controller.text);
       }
     }

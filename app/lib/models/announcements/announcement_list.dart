@@ -16,7 +16,7 @@ List<Announcement> parseAnnouncements(String response) {
   final el = json.decode(response) as List<dynamic>;
   final announcements = el
       .map((dynamic e) =>
-  e == null ? null : Announcement.fromJson(e as Map<String, dynamic>))
+          e == null ? null : Announcement.fromJson(e as Map<String, dynamic>))
       .toList();
   return announcements;
 }
@@ -32,7 +32,7 @@ Future<List<Announcement>> fetchAnnouncement() async {
 }
 
 class AnnouncementsList extends StateNotifier<List<Post>> {
-  AnnouncementsList([List<Post> initialPosts]) :  super(initialPosts ?? []);
+  AnnouncementsList([List<Post> initialPosts]) : super(initialPosts ?? []);
 
   void add(String title, String description, String author) {
     state = [
@@ -43,9 +43,9 @@ class AnnouncementsList extends StateNotifier<List<Post>> {
 
   void edit(
       {@required int id,
-        @required String title,
-        @required String description,
-        @required String author}) {
+      @required String title,
+      @required String description,
+      @required String author}) {
     state = [
       for (final announcement in state)
         if (announcement.id == id)

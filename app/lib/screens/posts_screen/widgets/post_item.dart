@@ -18,9 +18,18 @@ class PostItem extends HookWidget {
         elevation: 6,
         child: Column(
           children: [
-            PostField(controllerText: _post.title, fieldName:'title', ),
-            PostField(controllerText: _post.description, fieldName:'description',),
-            PostField(controllerText: _post.author, fieldName:'author',),
+            PostField(
+              controllerText: _post.title,
+              fieldName: 'title',
+            ),
+            PostField(
+              controllerText: _post.description,
+              fieldName: 'description',
+            ),
+            PostField(
+              controllerText: _post.author,
+              fieldName: 'author',
+            ),
           ],
         ));
   }

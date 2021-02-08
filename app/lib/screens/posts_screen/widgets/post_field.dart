@@ -11,7 +11,6 @@ class PostField extends HookWidget {
     Key key,
     @required this.controllerText,
     @required this.fieldName,
-
   }) : super(key: key);
 
   final String controllerText;
@@ -35,9 +34,15 @@ class PostField extends HookWidget {
             ? textEditingController.text = controllerText
             : context.read(postsListNotifier).edit(
                   id: _post.id,
-                  title: fieldName == 'title' ? textEditingController.text : _post.title,
-                  description: fieldName == 'description' ?  textEditingController.text : _post.description,
-                  author: fieldName == 'author' ?  textEditingController.text : _post.author,
+                  title: fieldName == 'title'
+                      ? textEditingController.text
+                      : _post.title,
+                  description: fieldName == 'description'
+                      ? textEditingController.text
+                      : _post.description,
+                  author: fieldName == 'author'
+                      ? textEditingController.text
+                      : _post.author,
                 );
       },
       child: ListTile(
