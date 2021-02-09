@@ -16,6 +16,10 @@
 
 ## How to launch it locally?
 
+### <a href ="https://www.youtube.com/watch?v=FG9UZGyMl_g&feature=youtu.be&ab_channel=WiktorZaj%C4%85c">  Here is a video showing how to work with this repository </a>
+
+You can also ue instructions below.
+
 <br/>
 
 <b> 1. </b> Make sure that you have `docker` and `docker-compose` installed on your machine.
@@ -45,7 +49,8 @@ When the installation will be finished, you should see this output:
 <br/>
 
 #### Now just head to the `http://0.0.0.0/#/` in the browser too see the website!
----
+
+
 
 <p align="center">
   Found it useful? Want more updates?
@@ -59,81 +64,90 @@ When the installation will be finished, you should see this output:
 
 ### Project tree ( without meaningless files)
 ```bash
-|-- LICENSE
-|-- all_lint_rules.yaml
-|-- analysis_options.yaml
-|-- app
-|   |-- Dockerfile
-|   |-- README.md
-|   |-- assets
-|   |   |-- fonts
-|   |   `-- images
-|   |-- lib
-|   |   |-- components
-|   |   |-- constants.dart
-|   |   |-- main.dart
-|   |   |-- models
-|   |   |   |-- announcements
-|   |   |   |   |-- announcement_class.dart
-|   |   |   |   `-- announcement_list.dart
-|   |   |   |-- http_exception.dart
-|   |   |   `-- posts
-|   |   |       |-- post_class.dart
-|   |   |       `-- posts_list.dart
-|   |   |-- providers
-|   |   |   |-- announcements_state.dart
-|   |   |   `-- posts_state.dart
-|   |   `-- screens
-|   |       |-- announcements_screen
-|   |       |   `-- announcements_screen.dart
-|   |       |-- home_screen
-|   |       |   `-- home_screen.dart
-|   |       |-- loading_screen.dart
-|   |       |-- page_not_found_screen
-|   |       |   `-- page_not_found.dart
-|   |       `-- posts_screen
-|   |           |-- posts_screen.dart
-|   |           `-- widgets
-|   |               `-- title.dart
-|   |-- pubspec.yaml
-|   `-- web
-|       |-- index.html
-|       `-- manifest.json
-|-- docker-compose.yml
-|-- env
-|   |-- flutter.env
-|   `-- postgre.env
-|-- nginx
-|   |-- Dockerfile
-|   `-- nginx.conf
-`-- server
-    |-- Dockerfile
-    |-- air.conf
-    |-- conf
-    |   `-- app.ini
-    |-- database
-    |   |-- postgres
-    |   |   |-- funcs
-    |   |   |   `-- posts.go
-    |   |   `-- postgres.go
-    |   `-- redis
-    |       |-- funcs
-    |       |   |-- announcements.go
-    |       |   `-- majors.go
-    |       `-- redis.go
-    |-- go.mod
-    |-- main.go
-    |-- main_test.go
-    |-- models
-    |   |-- announcement.go
-    |   `-- post.go
-    |-- routers
-    |   |-- api
-    |   |   |-- announcements.go
-    |   |   `-- posts.go
-    |   `-- router.go
-    |-- settings
-    |   `-- settings.go
+|├── all_lint_rules.yaml
+├── analysis_options.yaml
+├── app
+│   ├── 
+│   ├── assets
+│   │   ├── fonts
+│   │   └── images
+│   ├── Dockerfile
+│   ├── lib
+│   │   ├── components
+│   │   │   └── form
+│   │   │       ├── form.dart
+│   │   │       └── form_field.dart
+│   │   ├── constants.dart
+│   │   ├── main.dart
+│   │   ├── models
+│   │   │   ├── announcements
+│   │   │   │   ├── announcement_class.dart
+│   │   │   │   └── announcement_list.dart
+│   │   │   ├── http_exception.dart
+│   │   │   ├── posts
+│   │   │   │   ├── post_class.dart
+│   │   │   │   ├── post_id_response.dart
+│   │   │   │   └── posts_list.dart
+│   │   │   └── provider_exception.dart
+│   │   ├── providers
+│   │   │   ├── announcements_provider.dart
+│   │   │   └── posts_provider.dart
+│   │   └── screens
+│   │       ├── announcements_screen
+│   │       │   ├── announcements_screen.dart
+│   │       │   └── widgets
+│   │       │       ├── announcement_field.dart
+│   │       │       └── announcement_item.dart
+│   │       ├── home_screen
+│   │       │   └── home_screen.dart
+│   │       ├── loading_screen.dart
+│   │       ├── page_not_found_screen
+│   │       │   └── page_not_found.dart
+│   │       └── posts_screen
+│   │           ├── posts_screen.dart
+│   │           └── widgets
+│   │               ├── post_field.dart
+│   │               └── post_item.dart
+│   ├── pubspec.yaml
+│   ├── README.md
+│   └── web
+│       ├── index.html
+│       └── manifest.json
+├── docker-compose.yml
+├── env
+│   ├── flutter.env
+│   └── postgre.env
+├── nginx
+│   ├── Dockerfile
+│   └── nginx.conf
+└── server
+    ├── air.conf
+    ├── conf
+    │   └── app.ini
+    ├── database
+    │   ├── postgres
+    │   │   ├── funcs
+    │   │   │   └── posts.go
+    │   │   └── postgres.go
+    │   └── redis
+    │       ├── funcs
+    │       │   ├── announcements.go
+    │       │   └── majors.go
+    │       └── redis.go
+    ├── Dockerfile
+    ├── main.go
+    ├── main_test.go
+    ├── models
+    │   ├── announcement.go
+    │   └── post.go
+    ├── routers
+    │   ├── api
+    │   │   ├── announcements.go
+    │   │   └── posts.go
+    │   └── router.go
+    ├── settings
+    │   └── settings.go
+
 
 ```
 
