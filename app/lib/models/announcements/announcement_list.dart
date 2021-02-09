@@ -1,28 +1,27 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../models/http_exception.dart';
-import '../../models/posts/post_class.dart';
 
 import 'announcement_class.dart';
 
-const _postApiUrl = 'http://localhost/api/announcement/announcement?all=true';
+const _announcementApiUrl = 'http://localhost/api/announcement/';
 
 List<Announcement> parseAnnouncements(String response) {
   final el = json.decode(response) as List<dynamic>;
   final announcements = el
       .map((dynamic e) =>
-  e == null ? null : Announcement.fromJson(e as Map<String, dynamic>))
+          e == null ? null : Announcement.fromJson(e as Map<String, dynamic>))
       .toList();
   return announcements;
 }
 
 Future<List<Announcement>> fetchAnnouncement() async {
-  final response = await http.get(_postApiUrl);
+  final response = await http.get('${_announcementApiUrl}announcement?all=true');
   if (response.statusCode == 200) {
     return compute(parseAnnouncements, response.body);
   }
@@ -31,36 +30,36 @@ Future<List<Announcement>> fetchAnnouncement() async {
   }
 }
 
-class AnnouncementsList extends StateNotifier<List<Post>> {
-  AnnouncementsList([List<Post> initialPosts]) :  super(initialPosts ?? []);
 
-  void add(String title, String description, String author) {
-    state = [
-      ...state,
-      Post(title: title, description: description, author: author)
-    ];
+class AnnouncementsList extends StateNotifier<List<Announcement>> {
+  AnnouncementsList([List<Announcement> initialPosts]) : super(initialPosts ?? []);
+
+  Future<List<Announcement>> fetch() async {
+      final announcements = await fetchAnnouncement();
+      return announcements;
   }
 
-  void edit(
-      {@required int id,
-        @required String title,
-        @required String description,
-        @required String author}) {
-    state = [
-      for (final announcement in state)
-        if (announcement.id == id)
-          Post(
-            id: id,
-            title: title,
-            description: description,
-            author: author,
-          )
-        else
-          announcement,
-    ];
+  Future<void> add(List<String> values) async {
+    final _addAnnouncementUrl = '${_announcementApiUrl}add?title=${values[0]}&author=${values[1]}';
+    try {
+      await http.post(_addAnnouncementUrl);
+
+      state = [
+        ...state,
+        Announcement(title: values[0], author: values[1])
+      ];
+    } catch(err) {
+     throw HttpException('Error occurred while adding an announcement: $err');
+    }
+
   }
 
-  void remove(Post target) {
-    state = state.where((post) => post.id != target.id).toList();
+  void remove(Announcement target) {
+    try {
+      http.delete('${_announcementApiUrl}announcement${target.title}');
+    } catch(err){
+      throw HttpException('Error occurred while removing an announcement');
+    }
+    state = state.where((announcement) => announcement.title != target.title).toList();
   }
 }

@@ -13,13 +13,11 @@ func checkErr(err error) {
 	}
 }
 
-func CreateAnnouncement(key, title, description, author, id string) error {
+func CreateAnnouncement(key, title, author string) error {
 
 	a := models.Announcement{
 		Title:       title,
-		Description: description,
 		Author:      author,
-		Id:          id,
 	}
 
 	data, err := json.Marshal(a)

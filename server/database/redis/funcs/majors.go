@@ -59,6 +59,7 @@ func Delete(key string) error {
 	defer conn.Close()
 
 	_, err := conn.Do("DEL", key)
+	fmt.Println(key)
 	return err
 }
 
