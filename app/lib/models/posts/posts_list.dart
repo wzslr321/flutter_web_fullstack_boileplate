@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -9,7 +8,6 @@ import 'package:meta/meta.dart';
 import '../../models/http_exception.dart';
 import '../../models/posts/post_class.dart';
 import '../../models/posts/post_id_response.dart';
-import '../../providers/posts_provider.dart';
 
 import 'post_class.dart';
 
@@ -34,9 +32,6 @@ Future<List<Post>> fetchPosts() async {
   }
 }
 
-void addPostValuesToNotifier(BuildContext context, List<String> getValues) {
-  context.read(postsListNotifier).add(getValues);
-}
 
 class PostsList extends StateNotifier<List<Post>> {
   PostsList([List<Post> initialPosts]) : super(initialPosts ?? []);

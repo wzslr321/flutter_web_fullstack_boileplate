@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod/riverpod.dart';
 
 import '../../models/http_exception.dart';
-import '../../providers/announcements_provider.dart';
 
 import 'announcement_class.dart';
 
@@ -32,9 +30,6 @@ Future<List<Announcement>> fetchAnnouncement() async {
   }
 }
 
-void addAnnouncementsValuesToNotifier(BuildContext context, List<String> getValues) {
-  context.read(announcementsListNotifier).add(getValues);
-}
 
 class AnnouncementsList extends StateNotifier<List<Announcement>> {
   AnnouncementsList([List<Announcement> initialPosts]) : super(initialPosts ?? []);

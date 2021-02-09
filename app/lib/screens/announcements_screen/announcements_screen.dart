@@ -33,8 +33,8 @@ class AnnouncementsScreen extends HookWidget {
               key: _addAnnouncementKey,
               hintTexts: const ['title', 'author'],
               controllers: [_titleController, _authorController],
+              isPostForm: false,
               buttonText: 'Add Announcement',
-              isPostsForm: false,
             ),
             if (_announcements.isNotEmpty) const Divider(height: 0),
             for (var i = 0; i < _announcements.length; i++) ...[
