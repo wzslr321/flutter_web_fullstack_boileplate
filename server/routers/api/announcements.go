@@ -77,12 +77,6 @@ func DeleteAnnouncement(ctx *gin.Context) {
 	}
 }
 
-func UpdateAnnouncemnet(ctx *gin.Context) {
-	key := ctx.Param("key")
-
-	err := redisfuncs.
-}
-
 func noMatch(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"status": "There is no announcement with this title",

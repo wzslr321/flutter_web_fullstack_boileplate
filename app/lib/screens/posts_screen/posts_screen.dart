@@ -36,6 +36,8 @@ class PostsScreen extends HookWidget {
                 _authorController
               ],
               hintTexts: const ['title', 'description', 'author'],
+              isPostsForm: true,
+              buttonText: 'Add Post',
             ),
             if (_posts.isNotEmpty) const Divider(height: 0),
             for (var i = 0; i < _posts.length; i++) ...[

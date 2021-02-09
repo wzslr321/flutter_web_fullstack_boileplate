@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../models/http_exception.dart';
+import '../../providers/announcements_provider.dart';
 
 import 'announcement_class.dart';
 
@@ -28,6 +30,10 @@ Future<List<Announcement>> fetchAnnouncement() async {
   {
     throw HttpException("Couldn't load posts");
   }
+}
+
+void addAnnouncementsValuesToNotifier(BuildContext context, List<String> getValues) {
+  context.read(announcementsListNotifier).add(getValues);
 }
 
 class AnnouncementsList extends StateNotifier<List<Announcement>> {
@@ -53,26 +59,9 @@ class AnnouncementsList extends StateNotifier<List<Announcement>> {
 
   }
 
-  void edit(
-      {
-      @required String title,
-      @required String author}) {
-    state = [
-      for (final announcement in state)
-        if (announcement.title == title)
-          Announcement(
-            title: title,
-            author: author,
-          )
-        else
-          announcement,
-    ];
-  }
-
   void remove(Announcement target) {
     try {
       http.delete('${_announcementApiUrl}announcement${target.title}');
-      print('${_announcementApiUrl}announcement${target.title}');
     } catch(err){
       throw HttpException('Error occurred while removing an announcement');
     }
