@@ -16,7 +16,7 @@
 
 ## How to launch it locally?
 
-### <a href ="https://www.youtube.com/watch?v=FG9UZGyMl_g&feature=youtu.be&ab_channel=WiktorZaj%C4%85c">  Here is a video showing how to work with this repository </a>
+### <a href ="https://www.youtube.com/watch?v=DzhjvyByvIs&feature=youtu.be&ab_channel=WiktorZaj%C4%85c">  Here is a video showing how to work with this repository </a>
 
 You can also ue instructions below.
 
