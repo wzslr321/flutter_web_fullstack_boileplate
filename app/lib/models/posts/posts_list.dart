@@ -6,35 +6,36 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 import '../../models/http_exception.dart';
-import '../../models/posts/post_class.dart';
+import '../../models/posts/post.dart';
 import '../../models/posts/post_id_response.dart';
 
-import 'post_class.dart';
+import 'post.dart';
+
 
 const _postApiUrl = 'http://localhost/api/post/';
 
-List<Post> parsePosts(String response) {
-  final el = json.decode(response) as List<dynamic>;
-  final posts = el
-      .map((dynamic e) =>
-          e == null ? null : Post.fromJson(e as Map<String, dynamic>))
-      .toList();
-  return posts;
-}
-
-Future<List<Post>> fetchPosts() async {
-  final response = await http.get(_postApiUrl);
-  if (response.statusCode == 200) {
-    return compute(parsePosts, response.body);
-  }
-  {
-    throw HttpException("Couldn't load posts");
-  }
-}
-
-
 class PostsList extends StateNotifier<List<Post>> {
   PostsList([List<Post> initialPosts]) : super(initialPosts ?? []);
+
+
+  List<Post> parsePosts(String response) {
+    final el = json.decode(response) as List<dynamic>;
+    final posts = el
+        .map((dynamic e) =>
+    e == null ? null : Post.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return posts;
+  }
+
+  Future<List<Post>> fetchPosts() async {
+    final response = await http.get(_postApiUrl);
+    if (response.statusCode == 200) {
+      return compute(parsePosts, response.body);
+    }
+    {
+      throw HttpException("Couldn't load posts");
+    }
+  }
 
   Future<List<Post>> fetch() async {
     final posts = await fetchPosts();

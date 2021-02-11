@@ -15,17 +15,18 @@ class CustomFormField extends HookWidget {
     final _queryDataSize = MediaQuery.of(context).size;
 
     return Container(
-        width: _queryDataSize.width * 0.5,
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(hintText: hintText),
-          validator: (value) {
-            if (value.isEmpty) {
-              return "Please, don't leave fields blank";
-            }
-            return null;
-          },
-        ));
+      width: _queryDataSize.width * 0.5,
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(hintText: hintText),
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Please, don't leave fields blank";
+          }
+          return null;
+        },
+      ),
+    );
   }
 
   @override

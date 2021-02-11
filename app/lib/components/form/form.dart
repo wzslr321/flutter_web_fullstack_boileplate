@@ -58,16 +58,20 @@ class CustomForm extends HookWidget {
             ElevatedButton(
                 onPressed: () => {
                       if (isPostForm)
-                        context
-                            .read(postsListNotifier)
-                            .add(_getControllerValues())
+                        {
+                          context
+                              .read(postsListNotifier)
+                              .add(_getControllerValues())
+                        }
                       else
-                        context
-                            .read(announcementsListNotifier)
-                            .add(_getControllerValues()),
+                        {
+                          context
+                              .read(announcementsListNotifier)
+                              .add(_getControllerValues()),
+                        },
                       _clearController()
                     },
-                child:  Text(buttonText))
+                child: Text(buttonText))
           ],
         ));
   }
