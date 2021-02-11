@@ -18,6 +18,8 @@
 
 ### <a href ="https://www.youtube.com/watch?v=DzhjvyByvIs&feature=youtu.be&ab_channel=WiktorZaj%C4%85c">  Here is a video showing how to work with this repository </a>
 
+Note the difference in containers name on the video - `fggp` was updated to `flutter_web_fullstack_boilerplate` 
+
 You can also ue instructions below.
 
 <br/>
@@ -26,7 +28,7 @@ You can also ue instructions below.
 
 <br/>
 
-<b> 2. </b> Clone the repository to the folder of your choice, by executing: `git clone https://github.com/wzslr321/fggp.git` in the console.
+<b> 2. </b> Clone the repository to the folder of your choice, by executing: `git clone hhttps://github.com/wzslr321/flutter_web_fullstack_boileplate.git` in the console.
 
 <br/>
 
