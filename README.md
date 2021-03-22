@@ -66,16 +66,6 @@ When the installation will be finished, you should see this output:
 
 
 
-<p align="center">
-  Found it useful? Want more updates?
-</p>
-
-<p align = "center">
-  <b> <i> Show your support by giving a :star: </b> </i>
-</p>
-
----
-
 ### Project tree ( without meaningless files)
 ```bash
 |├── all_lint_rules.yaml
