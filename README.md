@@ -10,9 +10,21 @@
   </i>
 </p>
 
-#
-
 <br/>
+
+---
+
+<p align="center">
+  Found it useful? Want more updates?
+</p>
+
+<p align = "center">
+  <b> <i> Show your support by giving a :star: </b> </i>
+</p>
+
+---
+
+</br>
 
 ## How to launch it locally?
 
