@@ -3,7 +3,7 @@ module github.com/wzslr321
 go 1.15
 
 require (
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.7.0
 	github.com/gomodule/redigo v1.8.3
 	github.com/lib/pq v1.9.0 // indirect
 	github.com/rs/cors v1.7.0
